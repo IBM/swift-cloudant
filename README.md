@@ -1,18 +1,16 @@
-# :warning: NO LONGER MAINTAINED :warning:
-
-**This library is end-of-life and no longer supported.**
-
-This repository will not be updated. The repository will be kept available in read-only mode.
-
-Please see the list of [forks](https://github.com/cloudant/swift-cloudant/network/members) for continuing development efforts [#194](https://github.com/cloudant/swift-cloudant/issues/194).
-
-For FAQs and additional information please refer to the
-[Cloudant blog](https://blog.cloudant.com/2021/06/30/Cloudant-SDK-Transition.html).
-
 # swift-cloudant
 [![Version](http://cocoapod-badges.herokuapp.com/v/SwiftCloudant/badge.png)](http://cocoadocs.org/docsets/SwiftCloudant)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/CDTDatastore/SwiftCloudant.png)](http://cocoadocs.org/docsets/SwiftCloudant)
 [![Build Status](https://travis-ci.org/cloudant/swift-cloudant.svg?branch=master)](https://travis-ci.org/cloudant/swift-cloudant)
+
+Note, 6/22/2023:
+
+This framework lives in this repo under the @IBM org, but is a fork from the [original source](https://github.com/cloudant/swift-cloudant).
+
+This framework will be maintained over the medium / long term, but only on a best-effort basis by enterprising IBMers who like the project and want to work on it in their free time. 
+
+Please do not contact the [@Cloudant](https://github.com/cloudant) regarding this repository. Please also do not contact any previous maintainers. 
+The cloudant team has no connection to this repository and cannot help or provide any support.
 
 **Applications use swift-cloudant to store, index and query remote
 JSON data on Cloudant or CouchDB.**
