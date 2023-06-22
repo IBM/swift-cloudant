@@ -3,6 +3,8 @@
 [![Platform](http://cocoapod-badges.herokuapp.com/p/CDTDatastore/SwiftCloudant.png)](http://cocoadocs.org/docsets/SwiftCloudant)
 [![Build Status](https://travis-ci.org/cloudant/swift-cloudant.svg?branch=master)](https://travis-ci.org/cloudant/swift-cloudant)
 
+A Swift Lang client for Cloudant and CouchDB
+
 Note, 6/22/2023:
 
 This framework lives in this repo under the @IBM org, but is a fork from the [original source](https://github.com/cloudant/swift-cloudant).
