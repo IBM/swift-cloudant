@@ -33,10 +33,6 @@ class ViewController: UIViewController {
     }
     
     func initSwifCloudant() {
-        
-        // init config
-        let config = ClientConfiguration(shouldBackOff: false)
-        
         // init local instance URL with no failure tolerance
         guard
             let couchURL = URL(string: "http://localhost:5984")
