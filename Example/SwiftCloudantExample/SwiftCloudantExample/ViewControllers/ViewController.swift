@@ -40,10 +40,14 @@ class ViewController: UIViewController {
             fatalError("test instance URL error")
         }
         
+        let config = ClientConfiguration(shouldBackOff: false,
+                                         clientTimeoutInterval: 2.0)
+        
         // init client
         couchClient = .init(url: couchURL,
                             username: "admin",
-                            password: "p@ssw0rd")
+                            password: "p@ssw0rd",
+                            configuration: config)
     }
     
     // utils

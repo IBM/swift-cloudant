@@ -49,7 +49,15 @@ public struct ClientConfiguration {
      - Note: Default value is `false`
      */
     public var useSubfolderHostPath: Bool
+    
+    /**
+     The number of attempts the client should make to back off and get a successful response
+     from server.
 
+     - Note: The maximum is hard limited by the client to 10 retries.
+     */
+    public var clientTimeoutInterval: Double
+    
     /**
      Creates an ClientConfiguration
      - parameter shouldBackOff: Should the client automatically back off.
@@ -62,11 +70,13 @@ public struct ClientConfiguration {
     public init(shouldBackOff: Bool,
                 backOffAttempts: UInt = 3,
                 initialBackOff: DispatchTimeInterval = .milliseconds(250),
-                useSubfolderHostPath: Bool = false){
+                useSubfolderHostPath: Bool = false,
+                clientTimeoutInterval: Double = 10.0){
         self.shouldBackOff = shouldBackOff
         self.backOffAttempts = backOffAttempts
         self.initialBackOff = initialBackOff
         self.useSubfolderHostPath = useSubfolderHostPath
+        self.clientTimeoutInterval = clientTimeoutInterval
     }
 }
 
