@@ -60,6 +60,7 @@ class GetAllDocsTest: XCTestCase {
                 
             }
             client?.add(operation: putDoc).waitUntilFinished()
+            
         }
     }
     

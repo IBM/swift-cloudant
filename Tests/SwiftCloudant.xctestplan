@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "12C821CA-7CA5-4D52-A176-EF5DE7C0E2F6",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "environmentVariableEntries" : [
+      {
+        "key" : "SERVER_USER",
+        "value" : "admin"
+      },
+      {
+        "key" : "SERVER_PASSWORD",
+        "value" : "p@ssw0rd"
+      },
+      {
+        "key" : "SERVER_URL",
+        "value" : "http:\/\/localhost:5984"
+      }
+    ]
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SwiftCloudantTests",
+        "name" : "SwiftCloudantTests"
+      }
+    }
+  ],
+  "version" : 1
+}
