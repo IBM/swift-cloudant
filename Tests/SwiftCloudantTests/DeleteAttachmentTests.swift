@@ -51,7 +51,7 @@ class DeleteAttachmentTests : XCTestCase {
                                   contentType: "text/plain",
                                          data: attachment.data(using: String.Encoding.utf8, allowLossyConversion: false)!,
                                    documentID: docId,
-                                        revision: revId!,
+                                        revision: revId!, // TODO: handle failures gracefully vs force-unwrapping
                                   databaseName: dbName!
                                          )
         {[weak self] (response, info, error) in
