@@ -128,7 +128,7 @@ class OperationRequestBuilder {
 
         var request = URLRequest(url: url)
         request.cachePolicy = .useProtocolCachePolicy
-        request.timeoutInterval = 10.0
+        request.timeoutInterval = CouchDBClient.defaultConfig.clientTimeoutInterval
         request.httpMethod = operation.httpMethod
 
         if let body = operation.httpRequestBody {
@@ -137,7 +137,6 @@ class OperationRequestBuilder {
         }
 
         return request
-
     }
 
 }
