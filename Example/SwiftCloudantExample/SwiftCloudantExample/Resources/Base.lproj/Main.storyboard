@@ -16,27 +16,109 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aI9-U8-Vp8">
-                                <rect key="frame" x="175" y="343" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(msg logs will print here)" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Nl-gZ-qa1">
+                                <rect key="frame" x="36" y="79" width="321" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="rPE-rY-zft"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="J5u-h1-YAS">
+                                <rect key="frame" x="0.0" y="184" width="393" height="634"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" verticalHuggingPriority="1" verticalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="u1h-8E-31y">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="1"/>
+                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="uDD-Ug-x13"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8b7-KV-Pfs">
+                                        <rect key="frame" x="0.0" y="6" width="393" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="AD2-47-tLv"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Get All DBs"/>
+                                        <connections>
+                                            <action selector="getAllDBsButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zC8-uq-AOk"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5mw-Hh-MDy">
+                                        <rect key="frame" x="0.0" y="51" width="393" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="4Zd-iM-QeC"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Create DB"/>
+                                        <connections>
+                                            <action selector="createDBButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ldk-85-POh"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8N-ku-pLx">
+                                        <rect key="frame" x="0.0" y="96" width="393" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="8ss-fo-5PT"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Create Document"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VsO-1p-FA5">
+                                        <rect key="frame" x="0.0" y="141" width="393" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="lWY-oY-hun"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Destroy Document"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JjZ-26-yDX">
+                                        <rect key="frame" x="0.0" y="186" width="393" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="5pi-WW-naq"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Destroy DB"/>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K98-pu-HnT">
+                                        <rect key="frame" x="0.0" y="231" width="393" height="403"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="8b7-KV-Pfs" firstAttribute="leading" secondItem="J5u-h1-YAS" secondAttribute="leading" constant="20" id="3zE-ai-Nss"/>
+                                    <constraint firstAttribute="trailing" secondItem="u1h-8E-31y" secondAttribute="trailing" constant="10" id="6qY-Au-vdV"/>
+                                    <constraint firstItem="u1h-8E-31y" firstAttribute="leading" secondItem="J5u-h1-YAS" secondAttribute="leading" constant="10" id="71A-bX-h1q"/>
+                                    <constraint firstAttribute="trailing" secondItem="8b7-KV-Pfs" secondAttribute="trailing" constant="20" id="aCo-4S-hgh"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="J5u-h1-YAS" firstAttribute="top" secondItem="3Nl-gZ-qa1" secondAttribute="bottom" constant="5" id="02K-ZB-czY"/>
+                            <constraint firstItem="J5u-h1-YAS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="BUG-MZ-d24"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="J5u-h1-YAS" secondAttribute="bottom" id="XSW-Hj-zVT"/>
+                            <constraint firstItem="3Nl-gZ-qa1" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="eKG-bR-QRv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3Nl-gZ-qa1" secondAttribute="trailing" constant="20" id="fhg-NA-pCj"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="J5u-h1-YAS" secondAttribute="trailing" id="g78-JB-5on"/>
+                            <constraint firstItem="3Nl-gZ-qa1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="wnl-zW-a1C"/>
+                        </constraints>
                     </view>
                     <connections>
-                        <outlet property="testLabel" destination="aI9-U8-Vp8" id="bsZ-r5-U0T"/>
+                        <outlet property="messageLabel" destination="3Nl-gZ-qa1" id="IIa-zR-v3A"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="27" y="-27"/>
+            <point key="canvasLocation" x="26.717557251908396" y="-27.464788732394368"/>
         </scene>
     </scenes>
     <resources>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
