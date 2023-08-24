@@ -172,5 +172,4 @@ public class Operation: Foundation.Operation, HTTPRequestOperation
         super.cancel()
         self.executor?.cancel()
     }
-
 }
