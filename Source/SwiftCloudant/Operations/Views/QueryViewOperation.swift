@@ -284,7 +284,5 @@ public class QueryViewOperation: ViewOperation, JSONOperation {
         if let startKey = startKey {
             startKeyJson = try jsonValue(for: startKey)
         }
-
     }
-
 }
