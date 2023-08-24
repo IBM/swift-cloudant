@@ -666,11 +666,4 @@ public class ViewPager {
         
         viewPage.makeRequest(page: page)
     }
-    
-    
-    
 }
-
-
-
-
