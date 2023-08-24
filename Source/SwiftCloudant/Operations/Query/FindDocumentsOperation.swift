@@ -16,43 +16,6 @@
 
 import Foundation
 
-
-
-/**
- Specfies how a field should be sorted
- */
-public struct Sort {
-    
-    /**
-     The direction of Sorting
-     */
-    public enum Direction: String {
-        /**
-         Sort ascending
-         */
-        case asc = "asc"
-        /**
-         Sort descending
-         */
-        case desc = "desc"
-    }
-
-    /**
-     The field on which to sort
-     */
-    public let field: String
-    
-    /**
-     The direction in which to sort.
-     */
-    public let sort: Direction?
-  
-    public init(field: String, sort: Direction?) {
-        self.field = field
-        self.sort = sort
-    }
-}
-
 /**
  Protocol for operations which deal with the Mango API set for CouchDB / Cloudant.
 */
