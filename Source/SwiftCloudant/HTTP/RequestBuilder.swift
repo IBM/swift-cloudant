@@ -100,18 +100,24 @@ class OperationRequestBuilder {
      Builds the NSURLRequest from the operation in the property `operation`
      */
     func makeRequest() throws -> URLRequest {
-        
         guard let components = NSURLComponents(url: operation.rootURL, resolvingAgainstBaseURL: false)
         else {
             throw Error.URLGenerationFailed
         }
-        components.path = operation.httpPath
+
+        var path = ""
+        if let subPath = components.path {
+            path = "\(subPath)\(operation.httpPath)"
+        } else {
+            path = operation.httpPath
+        }
+        components.path = path
         var queryItems: [URLQueryItem] = []
 
         if let _ = components.queryItems {
             queryItems.append(contentsOf: components.queryItems!)
         }
-
+        
         queryItems.append(contentsOf: operation.queryItems)
         components.queryItems = queryItems
 

@@ -103,7 +103,6 @@ class OperationRequestExecutor: InterceptableSessionDelegate {
         do {
             let builder = OperationRequestBuilder(operation: self.operation)
             let request = try builder.makeRequest()
-
             self.task = self.operation.session.dataTask(request: request, delegate: self)
             self.task?.resume()
         } catch {

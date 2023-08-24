@@ -89,11 +89,14 @@ internal struct InterceptableSessionConfiguration {
     
     internal var password: String?
     
+    internal var useSubfolderHostPath: Bool
+    
     init(maxRetries: UInt = 10, shouldBackOff:Bool,
          backOffRetries: UInt = 3,
          initialBackOff: DispatchTimeInterval = .milliseconds(250),
          username: String? = nil,
-         password: String? = nil ){
+         password: String? = nil,
+         useSubfolderHostPath: Bool = false){
         
         self.maxRetries = maxRetries
         self.shouldBackOff = shouldBackOff
@@ -101,6 +104,7 @@ internal struct InterceptableSessionConfiguration {
         self.initialBackOff = initialBackOff
         self.username = username
         self.password = password
+        self.useSubfolderHostPath = useSubfolderHostPath
     }
 }
 
@@ -135,6 +139,7 @@ internal class URLSessionTask {
      - parameter delegate: The delegate for this task.
      */
     init(session: URLSession, request: URLRequest, inProgressTask:URLSessionDataTask, delegate: InterceptableSessionDelegate) {
+        
         self.request = request
         self.session = session
         self.delegate = delegate
@@ -184,9 +189,11 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
     
     private var shouldMakeCookieRequest: Bool = true
     
+    private var useSubfolderHostPath: Bool = false
+    
     convenience override init() {
-        self.init(delegate: nil, configuration: InterceptableSessionConfiguration(shouldBackOff: false))
-        
+        self.init(delegate: nil,
+                  configuration: InterceptableSessionConfiguration(shouldBackOff: false))
     }
 
     /**
@@ -196,6 +203,8 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
      */
     init(delegate: URLSessionDelegate?, configuration: InterceptableSessionConfiguration) {
         self.configuration = configuration
+        // set flag for instance hosted on subfolder path
+        self.useSubfolderHostPath = configuration.useSubfolderHostPath
         
         if let username = configuration.username, let password = configuration.password {
             let encodedUsername = username.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.alphanumerics)!
@@ -215,7 +224,7 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
      - returns: A `URLSessionTask` representing the task for the `NSURLRequest`
      */
     internal func dataTask(request: URLRequest, delegate: InterceptableSessionDelegate) -> URLSessionTask {
-        
+        //NSLog("dataTask URL: \(request.url?.absoluteString)")
         // Only request another cookie **if** cookie auth is enabled **and** it is the first request
         // for this session, renewals will be handled as tasks complete.
         if let _ = sessionRequestBody, let url = request.url, self.isFirstRequest {
@@ -371,9 +380,18 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
         
         guard shouldMakeCookieRequest else { return }
         
-        let components = NSURLComponents(url: url, resolvingAgainstBaseURL: false)!
-        components.path = "/_session"
-        
+        let components = NSURLComponents(url: url, resolvingAgainstBaseURL: false)!        
+        let pathStringComponents = components.path?.components(separatedBy: "/")
+        var sessionPath = ""
+        if let componentCount = pathStringComponents?.count {
+            switch componentCount >= 3 && useSubfolderHostPath {
+            case true:
+                sessionPath = "/\(pathStringComponents![1])/_session"
+            case false:
+                sessionPath = "/_session"
+            }
+        }
+        components.path = sessionPath
         
         var request = URLRequest(url: components.url!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -449,16 +467,18 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
         let osVersion = processInfo.operatingSystemVersionString
 
         #if os(iOS)
-            let platform = "iOS"
+            let platform = "ios"
         #elseif os(OSX)
-            let platform = "OSX"
+            let platform = "osx"
         #elseif os(Linux)
-            let platform = "Linux" // Cribbed from Kitura, neeed to see who is running this on Linux
+            let platform = "linus" // Cribbed from Kitura, neeed to see who is running this on Linux
+        #elseif targetEnvironment(simulator)
+            let platform = "simulator";
         #else
-            let platform = "Unknown";
+            let platform = "unknown";
         #endif
 
-        return "SwiftCloudant/\(CouchDBClient.version)/\(platform)/\(osVersion))"
+        return "SwiftCloudant-LTS:\(CouchDBClient.version):\(platform):\(osVersion))"
 
     }
 }
@@ -476,6 +496,8 @@ fileprivate extension DispatchTimeInterval {
             return .seconds(value * multiple)
         case .never:
             return .never
+        @unknown default:
+            fatalError("unknown value used for URLSession time interval.")
         }
     }
 }
