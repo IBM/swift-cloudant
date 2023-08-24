@@ -9,7 +9,15 @@
     }
   ],
   "defaultOptions" : {
-    "codeCoverage" : false,
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "SwiftCloudant",
+          "name" : "SwiftCloudant"
+        }
+      ]
+    },
     "environmentVariableEntries" : [
       {
         "key" : "SERVER_USER",
