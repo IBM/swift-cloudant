@@ -1,5 +1,5 @@
 # swift-cloudant
-
+ 
 A Swift Lang client for Cloudant and CouchDB
 
 Note, 6/22/2023:
