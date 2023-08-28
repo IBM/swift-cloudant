@@ -1,5 +1,6 @@
 //
 //  CreateJSONQueryIndexOperation.swift
+// 
 //  SwiftCloudant
 //
 //  Created by Emily Doran on 8/28/23.
@@ -112,5 +113,4 @@ public class CreateJSONQueryIndexOperation: CouchDatabaseOperation, MangoOperati
 
         jsonData = try JSONSerialization.data(withJSONObject: jsonDict)
     }
-
 }

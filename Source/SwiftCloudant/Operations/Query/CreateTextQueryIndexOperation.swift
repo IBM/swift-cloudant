@@ -175,7 +175,5 @@ public class CreateTextQueryIndexOperation: CouchDatabaseOperation, MangoOperati
             self.jsonData = try JSONSerialization.data(withJSONObject:jsonDict)
             
         }
-        
     }
-
 }

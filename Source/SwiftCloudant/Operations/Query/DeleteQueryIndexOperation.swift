@@ -94,5 +94,4 @@ public class DeleteQueryIndexOperation: CouchDatabaseOperation, JSONOperation {
 	public var  method: String {
 	 	return "DELETE"
 	}
-
 }

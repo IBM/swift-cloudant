@@ -322,6 +322,4 @@ public class FindDocumentsOperation: CouchDatabaseOperation, MangoOperation, JSO
     public func callCompletionHandler(response: Any?, httpInfo: HTTPInfo?, error: Error?) {
         self.completionHandler?(response as? [String: Any], httpInfo, error)
     }
-
-
 }
