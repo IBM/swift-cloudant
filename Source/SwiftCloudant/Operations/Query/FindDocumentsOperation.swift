@@ -1,5 +1,6 @@
 //
 //  FindDocumentsOperation.swift
+// 
 //  SwiftCloudant
 //
 //  Created by Rhys Short on 20/04/2016.

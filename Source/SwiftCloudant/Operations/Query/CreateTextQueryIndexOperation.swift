@@ -1,5 +1,6 @@
 //
 //  CreateTextQueryIndexOperation.swift
+// 
 //  SwiftCloudant
 //
 //  Created by Rhys Short on 18/05/2016.
