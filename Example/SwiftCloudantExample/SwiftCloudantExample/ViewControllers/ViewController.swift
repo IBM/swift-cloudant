@@ -68,7 +68,7 @@ class ViewController: UIViewController {
         let defaults = UserDefaults.standard
         
         // get and increment last DB number int
-        var dbNumber: Int = defaults.integer(forKey: "db-number-increment") ?? 0
+        var dbNumber: Int = defaults.integer(forKey: "db-number-increment")
         dbNumber += 1
         
         // set incremented value
@@ -124,11 +124,13 @@ class ViewController: UIViewController {
             // handle unwrapped response
             if let response = response {
                 if let error = response["error"] as? String {
+                    print("ERROR:: \(error)")
                     if let errorReason = response["reason"] as? String {
                         self.updateMessagelabel("error occured:\n\n \(errorReason)")
                     }
                 } else {
                     if let successMsg = response["ok"] as? String {
+                        print("SUCCESS:: \(successMsg)")
                         self.updateMessagelabel("success: database named \"\(newDBName)\" was created successfully")
                     }
                 }

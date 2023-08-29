@@ -88,12 +88,12 @@ class GetChangesTests : XCTestCase {
         let expectation = self.expectation(description: "changes")
         
         var docID: String?
-        let allDocs = GetAllDocsOperation(databaseName: dbName!){ (response, info, error) in
+        let allDocs = GetAllDocsOperation(databaseName: dbName!, completionHandler: { (response, info, error) in
             if let rows = response?["rows"] as? [[String: Any]],
                let first = rows.first {
                 docID = first["key"] as? String
             }
-        }
+        })
         client?.add(operation: allDocs).waitUntilFinished()
         var changeCount = 0
         let changes = GetChangesOperation(databaseName: dbName!, docIDs: [docID!], limit: 1, changeHandler: {(change) in

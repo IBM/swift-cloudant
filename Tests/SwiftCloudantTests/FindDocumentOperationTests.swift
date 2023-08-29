@@ -67,13 +67,13 @@ class FindDocumentOperationTests: XCTestCase {
 
         let expectation = self.expectation(description: "invalidSelector")
         
-        let find = FindDocumentsOperation(selector: ["foo": Void.self], databaseName: dbName!)
-        { (response, httpInfo, error) in
+        let find = FindDocumentsOperation(selector: ["foo": Void.self], databaseName: dbName!, completionHandler:
+                                            { (response, httpInfo, error) in
             XCTAssertNil(response)
             XCTAssertNil(httpInfo)
             XCTAssertNotNil(error)
             expectation.fulfill()
-        }
+        })
 
         client?.add(operation: find)
         
@@ -126,15 +126,15 @@ class FindDocumentOperationTests: XCTestCase {
                                           sort: [Sort(field: "foo", sort: nil)],
                                           bookmark: "blah",
                                           useIndex: "anIndex",
-                                          r: 1)
-        { (response, httpInfo, error) in
+                                          r: 1, completionHandler:
+                                            { (response, httpInfo, error) in
             XCTAssertNotNil(response)
             XCTAssertNil(response?["bookmark"])
             XCTAssertNotNil(httpInfo)
             XCTAssertNil(error)
             expectation.fulfill()
             
-        }
+        })
         
         self.simulateOkResponseFor(operation: find, jsonResponse: JSONResponse(dictionary: response))
         self.waitForExpectations(timeout: 10.0, handler: nil)
@@ -260,15 +260,15 @@ class FindDocumentOperationTests: XCTestCase {
                                           sort: [Sort(field: "foo", sort: nil)],
                                           bookmark: "blah",
                                           useIndex: "anIndex",
-                                          r: 1)
-        { (response, httpInfo, error) in
+                                          r: 1, completionHandler: 
+                                            { (response, httpInfo, error) in
             XCTAssertNotNil(response)
             XCTAssertEqual("blah", response?["bookmark"] as? String)
             XCTAssertNotNil(httpInfo)
             XCTAssertNil(error)
             expectation.fulfill()
             
-        }
+        })
         
         let docs:[[String:Any]] = []
         self.simulateOkResponseFor(operation: find, jsonResponse: ["bookmark":"blah", "docs":docs])

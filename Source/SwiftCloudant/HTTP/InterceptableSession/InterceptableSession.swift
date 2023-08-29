@@ -1,9 +1,10 @@
 //
-//  URLSession.swft
+//	InterceptableSession.swift
+//  
 //  SwiftCloudant
 //
-//  Created by Rhys Short on 28/02/2016.
-//  Copyright © 2016, 2019 IBM Corp. All rights reserved.
+//  Created by Dan Burkhardt on 8/29/23.
+//  Copyright © 2023 IBM Corporation. All Rights Reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
 //  except in compliance with the License. You may obtain a copy of the License at
@@ -14,152 +15,9 @@
 //  and limitations under the License.
 //
 
+
 import Foundation
 import Dispatch
-
-/**
-    A delegate for receiving data and responses from a URL task.
- */
-internal protocol InterceptableSessionDelegate {
-    
-    /**
-     Called when the response is received from the server
-     - parameter response: The response received from the server
-    */
-    func received(response:HTTPURLResponse)
-    
-    /**
-    Called when response data is available from the server, may be called multiple times.
-     - parameter data: The data received from the server, this may be only a fraction of the data
-     the server is sending as part of the response.
-    */
-    func received(data: Data)
-    
-    /**
-    Called when the request has completed
-     - parameter error: The error that occurred when making the request if any.
-    */
-    func completed(error: Swift.Error?)
-}
-
-/**
- The context for a HTTP interceptor.
- */
-public struct HTTPInterceptorContext {
-    /**
-     The request that will be made, this can be modified to add additional data to the request such
-     as session cookie authentication of custom tracking headers.
-     */
-    var request: URLRequest
-    /**
-     The response that was received from the server. This will be `nil` if the request errored
-     or has not yet been made.
-     */
-    let response: HTTPURLResponse?
-    /**
-     A flag that signals to the HTTP layer that it should retry the request.
-     */
-    var shouldRetry: Bool = false
-}
-
-/**
- Configuration for `InterceptableSession`
- */
-internal struct InterceptableSessionConfiguration {
-    
-    /**
-     The maximum number of retries the session should make before returning the result of an HTTP request
-     */
-    internal var maxRetries: UInt
-    /**
-     The number of times to back off from making requests when a 429 response is encountered
-     */
-    internal var backOffRetries: UInt
-    /**
-     Should the session back off, if false the session will not back off and retry automatically.
-     */
-    internal var shouldBackOff: Bool
-    
-    /** 
-     The initial value to use when backing off.
-    */
-    internal var initialBackOff: DispatchTimeInterval
-    
-    internal var username: String?
-    
-    internal var password: String?
-    
-    internal var useSubfolderHostPath: Bool
-    
-    init(maxRetries: UInt = 10, shouldBackOff:Bool,
-         backOffRetries: UInt = 3,
-         initialBackOff: DispatchTimeInterval = .milliseconds(250),
-         username: String? = nil,
-         password: String? = nil,
-         useSubfolderHostPath: Bool = false){
-        
-        self.maxRetries = maxRetries
-        self.shouldBackOff = shouldBackOff
-        self.backOffRetries = backOffRetries
-        self.initialBackOff = initialBackOff
-        self.username = username
-        self.password = password
-        self.useSubfolderHostPath = useSubfolderHostPath
-    }
-}
-
-/**
- A class which encapsulates HTTP requests. This class allows requests to be transparently retried.
- */
-internal class URLSessionTask {
-    fileprivate let request: URLRequest
-    fileprivate var inProgressTask: URLSessionDataTask
-    fileprivate let session: URLSession
-    fileprivate var remainingRetries: UInt = 10
-    fileprivate var remainingBackOffRetries: UInt = 3
-    fileprivate let delegate: InterceptableSessionDelegate
-    
-    //This  is for caching before delivering the response to the delegate in the event a 401/403 is
-    // encountered.
-    fileprivate var response: HTTPURLResponse? = nil
-    // Caching of the data before being delivered to the delegate in the event of a 401/403 response.
-    fileprivate var data: Data? = nil
-
-    public var state: Foundation.URLSessionTask.State {
-        get {
-            return inProgressTask.state
-        }
-    }
-
-    /**
-     Creates a URLSessionTask object
-     - parameter session: the NSURLSession it should use when making HTTP requests.
-     - parameter request: the HTTP request to make
-     - parameter inProgressTask: The NSURLSessionDataTask that is performing the request in NSURLSession.
-     - parameter delegate: The delegate for this task.
-     */
-    init(session: URLSession, request: URLRequest, inProgressTask:URLSessionDataTask, delegate: InterceptableSessionDelegate) {
-        
-        self.request = request
-        self.session = session
-        self.delegate = delegate
-        self.inProgressTask = inProgressTask
-    }
-
-    /**
-     Resumes a suspended task
-     */
-    public func resume() {
-        inProgressTask.resume()
-    }
-
-    /**
-     Cancels the task.
-     */
-    public func cancel() {
-        inProgressTask.cancel()
-    }
-}
 
 /**
  A class to create `URLSessionTask`
@@ -305,7 +163,7 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
             return
         }
         
-        // if the cached response is present in the task, then we need 
+        // if the cached response is present in the task, then we need
         // cache the data being reccieved from the server, otherwise pass it on.
         if let _ = task.response {
             if let _ = task.data {
@@ -380,7 +238,7 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
         
         guard shouldMakeCookieRequest else { return }
         
-        let components = NSURLComponents(url: url, resolvingAgainstBaseURL: false)!        
+        let components = NSURLComponents(url: url, resolvingAgainstBaseURL: false)!
         let pathStringComponents = components.path?.components(separatedBy: "/")
         var sessionPath = ""
         if let componentCount = pathStringComponents?.count {
@@ -428,7 +286,7 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
                         }
                         
                     } else {
-                        // we didn't get ok true, but got a successful response odd state, 
+                        // we didn't get ok true, but got a successful response odd state,
                         // probably best to log it and make it so we don't request the cookie again.
                         NSLog("Cookie request failed, response was not a JSON dictionary")
                     }
