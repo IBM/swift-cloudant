@@ -1,5 +1,6 @@
 //
 //  DeleteQueryIndexOperation.swift
+// 
 //  SwiftCloudant
 //
 //  Created by Rhys Short on 17/05/2016.
@@ -93,5 +94,4 @@ public class DeleteQueryIndexOperation: CouchDatabaseOperation, JSONOperation {
 	public var  method: String {
 	 	return "DELETE"
 	}
-
 }

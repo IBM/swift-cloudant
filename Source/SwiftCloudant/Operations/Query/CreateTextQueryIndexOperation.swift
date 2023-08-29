@@ -1,5 +1,6 @@
 //
-//  CreateQueryIndexOperation.swift
+//  CreateTextQueryIndexOperation.swift
+// 
 //  SwiftCloudant
 //
 //  Created by Rhys Short on 18/05/2016.
@@ -16,147 +17,6 @@
 
 
 import Foundation
-
-/**
-    An operation to create a JSON Query (Mango) Index.
- 
-    Usage example:
-    ```
-    let index = CreateJSONQueryIndexOperation(databaseName: "exampledb",
-        designDocumentID: "examples",
-        name:"exampleIndex", 
-        fields: [Sort(field:"food", sort: .desc)]) { (response, httpInfo, error) in
-        if let error = error {
-            // handle the error
-        } else {
-            // Check the status code for success.
-        }
- 
-    }
- 
-    client.add(operation: index)
-    ```
- */
-public class CreateJSONQueryIndexOperation: CouchDatabaseOperation, MangoOperation, JSONOperation {
-    
-    /**
-     Creates the operation
-     - parameter databaseName : The name of the database where the index should be created.
-     - parameter designDocumentID : The ID of the design document where the index should be saved, 
-     if set to `nil` the server will create a new design document with a generated ID.
-     - parameter fields : the fields to be indexed.
-     - parameter completionHandler: block to run when the operation completes.
-    */
-    public init(databaseName: String,
-            designDocumentID: String? = nil,
-                        name: String? = nil,
-                      fields: [Sort],
-                              completionHandler: (( [String : Any]?, HTTPInfo?, Error?) -> Void)? = nil) {
-        self.databaseName = databaseName
-        self.fields = fields
-        self.designDocumentID = designDocumentID
-        self.name = name
-        self.completionHandler = completionHandler
-    }
-    
-    public let databaseName: String
-    
-    public let completionHandler: (( [String : Any]?, HTTPInfo?, Error?) -> Void)?
-    
-    /**
-     The name of the index.
-     */
-    public let name: String?
-    
-    /**
-     The fields to which the index will be applied.
-     */
-    public let fields: [Sort]
-    
-    /**
-     The ID of the design document that this index should be saved to. If `nil` the server will
-     create a new design document with a generated ID.
-     */
-    public let designDocumentID: String?
-
-    private var jsonData: Data?
-    
-    
-    public var method: String {
-        return "POST"
-    }
-
-    public var data: Data? {
-        return self.jsonData
-    }
-    
-    public var endpoint: String {
-        return "/\(self.databaseName)/_index"
-    }
-
-    public func serialise() throws {
-        
-        var jsonDict: [String: Any] = ["type": "json"]
-
-        var index: [String: Any] = [:]
-        index["fields"] = transform(sortArray: fields)
-        jsonDict["index"] = index
-            
-        
-
-        if let name = name {
-            jsonDict["name"] = name
-        }
-
-        if let designDocumentID = designDocumentID {
-            jsonDict["ddoc"] = designDocumentID
-        }
-
-        jsonData = try JSONSerialization.data(withJSONObject: jsonDict)
-
-    }
-    
-}
-
-/**
-  A struct to represent a field in a Text index.
- */
-public struct TextIndexField {
-    
-    /**
-     The data types for a field in a Text index.
-     */
-    public enum `Type` : String {
-        /**
-         A Boolean data type.
-         */
-        case boolean = "boolean"
-        /**
-         A String data type.
-         */
-        case string = "string"
-        /**
-         A Number data type.
-         */
-        case number =  "number"
-    }
-    
-    /**
-     The name of the field
-    */
-    public let name: String
-    /**
-     The type of field.
-     */
-    public let type: Type
-  
-    public init(name: String, type: Type) {
-        self.name = name
-        self.type = type
-    }
-}
-
-
 
 /**
  An Operation to create a Text Query (Mango) Index.
@@ -196,13 +56,13 @@ public class CreateTextQueryIndexOperation: CouchDatabaseOperation, MangoOperati
      - parameter completionHandler: optional handler to run when the operation completes.
      */
     public init(databaseName: String,
-                        name: String? = nil,
-                      fields: [TextIndexField]? = nil,
-        defaultFieldAnalyzer: String? = nil,
-         defaultFieldEnabled: Bool? = nil,
-                    selector: [String:Any]? = nil,
-                   designDocumentID: String? = nil,
-           completionHandler: (([String : Any]?, HTTPInfo?, Error?) -> Void)? = nil) {
+                name: String? = nil,
+                fields: [TextIndexField]? = nil,
+                defaultFieldAnalyzer: String? = nil,
+                defaultFieldEnabled: Bool? = nil,
+                selector: [String:Any]? = nil,
+                designDocumentID: String? = nil,
+                completionHandler: (([String : Any]?, HTTPInfo?, Error?) -> Void)? = nil) {
         self.databaseName = databaseName
         self.completionHandler = completionHandler
         self.name = name
@@ -248,7 +108,7 @@ public class CreateTextQueryIndexOperation: CouchDatabaseOperation, MangoOperati
      The name of the design doc this index should be included with
      */
     public let designDocumentID: String?
-
+    
     private var jsonData : Data?
     public  var data: Data? {
         return jsonData
@@ -263,7 +123,7 @@ public class CreateTextQueryIndexOperation: CouchDatabaseOperation, MangoOperati
     }
     
     public func validate() -> Bool {
-
+        
         if let selector = selector {
             return JSONSerialization.isValidJSONObject(selector)
         }
@@ -272,7 +132,7 @@ public class CreateTextQueryIndexOperation: CouchDatabaseOperation, MangoOperati
     }
     
     public func serialise() throws {
-
+        
         do {
             var jsonDict: [String: Any] = [:]
             var index: [String: Any] = [:]
@@ -313,10 +173,7 @@ public class CreateTextQueryIndexOperation: CouchDatabaseOperation, MangoOperati
             }
             
             self.jsonData = try JSONSerialization.data(withJSONObject:jsonDict)
-
+            
         }
-        
     }
-    
 }
-

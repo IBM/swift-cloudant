@@ -1,5 +1,6 @@
 //
 //  FindDocumentsOperation.swift
+// 
 //  SwiftCloudant
 //
 //  Created by Rhys Short on 20/04/2016.
@@ -321,6 +322,4 @@ public class FindDocumentsOperation: CouchDatabaseOperation, MangoOperation, JSO
     public func callCompletionHandler(response: Any?, httpInfo: HTTPInfo?, error: Error?) {
         self.completionHandler?(response as? [String: Any], httpInfo, error)
     }
-
-
 }
