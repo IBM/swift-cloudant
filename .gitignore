@@ -99,6 +99,3 @@ Podfile.lock
 
 # macOS artifacts
 *.DS_Store
-
-# DocC docs output
-docs/
