@@ -2,12 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Source/SwiftCloudant/TestFile.swift">
-   </FileRef>
-   <FileRef
-      location = "group:Tests/SwiftCloudantTests/SwiftCloudantTestExample.swift">
-   </FileRef>
-   <FileRef
       location = "group:">
    </FileRef>
    <FileRef

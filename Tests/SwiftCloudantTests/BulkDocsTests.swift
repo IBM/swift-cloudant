@@ -160,7 +160,7 @@ class BulkDocsTests : XCTestCase {
         
         // Check that all the documents are in the db
         let getDocsExpect = self.expectation(description: "get all docs")
-        let allDocs = GetAllDocsOperation(databaseName: dbName!){ (response, httpInfo, error) in
+        let allDocs = GetAllDocsOperation(databaseName: dbName!, completionHandler: { (response, httpInfo, error) in
             
             XCTAssertNotNil(response)
             XCTAssertNotNil(httpInfo)
@@ -174,7 +174,7 @@ class BulkDocsTests : XCTestCase {
                 }
             }
             getDocsExpect.fulfill()
-        }
+        })
         self.client?.add(operation: allDocs)
         self.waitForExpectations(timeout: 10.0)
     }
