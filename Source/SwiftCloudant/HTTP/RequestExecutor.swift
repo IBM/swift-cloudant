@@ -17,20 +17,6 @@
 import Foundation
 
 /**
- Contains HTTP response information.
- */
-public struct HTTPInfo {
-    /**
-     The status code of the HTTP request.
-     */
-    public let statusCode: Int
-    /**
-     The headers that were returned by the server.
-     */
-    public let headers: [String: String]
-}
-
-/**
  Executes a `HTTPRequestOperation`'s HTTP request.
  */
 class OperationRequestExecutor: InterceptableSessionDelegate {
