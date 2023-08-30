@@ -36,7 +36,7 @@ jobs:
             generate-documentation --target SwiftCloudant \
             --disable-indexing \
             --transform-for-static-hosting \
-            --hosting-base-path swift-cloudant \
+            --hosting-base-path SwiftCloudant \
             --output-path ./docs
       
       - name: Setup Pages
@@ -51,7 +51,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ./docs/Documentation/swiftcloudant
+          path: ./docs
 
   deploy-docs:
     runs-on: ubuntu-latest
