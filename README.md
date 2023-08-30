@@ -1,29 +1,12 @@
 # swift-cloudant
 
-A Swift Lang client for Cloudant and CouchDB
+A native client for direct interaction with Cloudant and CouchDB in Swift.
 
-Note, 6/22/2023:
+## Features
 
-This framework lives in this repo under the @IBM org, but is a fork from the [original source](https://github.com/cloudant/swift-cloudant).
+SwiftCloudant enables Swift applications to directly interface with Cloudant / CouchDB instances and clusters.
 
-This framework will be maintained over the medium / long term, but only on a best-effort basis by enterprising IBMers who like the project and want to work on it in their free time. 
-
-Please do not contact the [@Cloudant](https://github.com/cloudant) regarding this repository. Please also do not contact any previous maintainers. 
-The cloudant team has no connection to this repository and cannot help or provide any support.
-
-**Applications use swift-cloudant to store, index and query remote
-JSON data on Cloudant or CouchDB.**
-
-Swift-Cloudant is an [Apache CouchDB&trade;][acdb] client written in Swift. It
-is built by [Cloudant](https://cloudant.com) and is available under the
-[Apache 2.0 license][ap2].
-
-[ap2]: https://github.com/cloudant/sync-android/blob/master/LICENSE
-[acdb]: http://couchdb.apache.org/
-
-## Early-Release
-
-This is an early-release version of the library, with support for the following operations:
+The following operations are supported:
 
 - Getting documents by doc ID.
 - Updating and deleting documents.
@@ -33,34 +16,46 @@ This is an early-release version of the library, with support for the following 
 - Querying views.
 - Creating, deleting and querying indexes.
 
-We will be rounding out the feature set in upcoming releases.
+## Documentation
 
-**Currently it does not support being called from Objective-C.**
+Documentation for the package is generated using DocC, and visible [on the repo's Github pages](https://github.com/ibm/swift-cloudant)
 
 ## Support
 
-`SwiftCloudant` is supported, however since it is an early release it is
-on a "best effort" basis.
+`SwiftCloudant` is supported on a "best effort" basis, and only in the free time of software engineers at [IBM](https://github.com/ibm).
 
-### Platforms
+Although the original project was started by [@Cloudant](https://github.com/cloudant), that original repository was deprecated and archived in 2019. 
+Do not contact any maintainers of this project without commits later than June 2023. Cloudant has no connection to this repository and cannot help or provide any support-- if support is needed, please open an issue against [this project](https://github.com/ibm/swift-cloudant)'s repository.
 
-Currently Swift Cloudant supports:
+### Languages
+
+This package only supports Swift, it does not currently have any support for Objective-C. 
+
+Please open a PR if you would like to add support, or open an issue to request our team to look at adding support.
+
+### Supported Platforms
+
+Swift Cloudant support is fully verified for:
 
 Swift versions
 - Minimum Swift language version 4.2
 - Minimum Swift tools version 5.0
 
 Platforms
-- macOS
 - Linux
+- Swift-on-server (e.g. Vapor)
+- iOS
+- iPadOS
+- macOS (including catalyst applications)
 
-Swift Cloudant is unsupported on:
-
-- iOS (should work, but hasn't been tested)
+Swift Cloudant support is not verified / tested for:
+- visionOS
 - tvOS
 - watchOS
 
-## Using in your project
+(it may work, but we have not verified. feel free to issue a PR if you get it running for these platforms)
+
+## Usage
 
 SwiftCloudant is available using the Swift Package Manager and [CocoaPods](http://cocoapods.org).
 
@@ -137,6 +132,7 @@ let delete = DeleteDocumentOperation(id: "doc1",
 }
 client.add(operation:delete)
 ```
+
 ## Requirements
 
 Currently they are no third party dependencies.
@@ -149,6 +145,13 @@ See [CONTRIBUTORS](CONTRIBUTORS).
 
 See [CONTRIBUTING](CONTRIBUTING.md).
 
-## License
+## Legal
 
-See [LICENSE](LICENSE)
+Swift-Cloudant is an [Apache CouchDB&trade;][acdb] client written in Swift. 
+
+It was originally is built by [Cloudant](https://cloudant.com), and is maintained by software engineers and Swift enthusiasts at [IBM](https://github.com/ibm). This project is available under the [Apache 2.0 license][ap2].
+
+[ap2]: https://github.com/cloudant/sync-android/blob/master/LICENSE
+[acdb]: http://couchdb.apache.org/
+
+See [LICENSE](LICENSE) for more information.
