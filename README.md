@@ -18,7 +18,9 @@ The following operations are supported:
 
 ## Documentation
 
-Documentation for the package is generated using DocC, and visible [on the repo's Github pages](https://github.com/ibm/swift-cloudant)
+[Documentation for SwiftCloudant](https://ibm.github.io/swift-cloudant/documentation/swiftcloudant/) is available via the repo's Github Pages site.
+ 
+The Github page for documentation is generated and updated automatically using a Github Workflow & DocC upon successful push to the `docs` branch of the repo.
 
 ## Support
 
