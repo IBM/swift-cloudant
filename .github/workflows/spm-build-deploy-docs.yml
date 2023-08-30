@@ -36,7 +36,7 @@ jobs:
             generate-documentation --target SwiftCloudant \
             --disable-indexing \
             --transform-for-static-hosting \
-            --hosting-base-path swift-cloudant \
+            --hosting-base-path SwiftCloudant \
             --output-path ./docs
       
       - name: Setup Pages
