@@ -30,11 +30,12 @@ jobs:
 
       - name: Build Docs
         run: |
-          swift package generate-documentation \
-            --output-path ./docs \
+          swift package \
+            --allow-writing-to-directory ./docs \
+            generate-documentation --target SwiftCloudant \
             --transform-for-static-hosting \
             --hosting-base-path swift-cloudant \
-            --target SwiftCloudant
+            --output-path ./docs
       
       - name: Setup Pages
         uses: actions/configure-pages@v3
