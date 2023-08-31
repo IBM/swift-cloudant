@@ -137,7 +137,18 @@ client.add(operation:delete)
 
 ## Requirements
 
-Currently they are no third party dependencies.
+The only dependency of the framework is a plugin that is published and maintained by Apple for generating DocC documentation, but it isn't required for anything other than generating documentation.
+
+This framework has no third-party dependencies.
+
+### Developers
+
+### Github Workflows
+
+CI/CD is an important part of the sustainability and maintenance of any project. We leverage Github actions via workflow automations for that purpose.
+
+// TODO: add final info on built & test automation config
+// TODO: add final info on documentation automation config
 
 ## Contributors
 
