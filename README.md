@@ -147,8 +147,34 @@ This framework has no third-party dependencies.
 
 CI/CD is an important part of the sustainability and maintenance of any project. We leverage Github actions via workflow automations for that purpose.
 
-// TODO: add final info on built & test automation config
+#### Test Github Workflows Locally (macOS)
+
+**Requirements**
+
+- homebrew
+    - install: (https://brew.sh/)[https://brew.sh/]
+- act
+    - `brew install act`
+
+**Test Scripts**
+
+There are a number of scripts in the `scripts/` subdirectory designed to make GH workflow testing easy without having to push to github.
+
+Please note: all test scripts must be run from the root of the project or they will break in unpredictable ways.
+
+These instructions assume you are using macOS, but you can easily adapt them to linux as well.
+
+
+
+**Supported Workflows**
+
 // TODO: add final info on documentation automation config
+spm-build-deploy-docs.yml
+
+
+// TODO: add final info on built & test automation config
+spm-build-test.yml
+
 
 ## Contributors
 

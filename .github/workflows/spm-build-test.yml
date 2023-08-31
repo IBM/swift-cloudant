@@ -16,8 +16,6 @@ jobs:
     steps:
     - name: Pull, run, and config latest couchDB image
       id: couchdb-up
-      container:
-        image: couchdb:latest
       env:
         SERVER_USER: "admin"
         SERVER_PASSWORD: "p@ssw0rd"
