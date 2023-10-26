@@ -99,3 +99,6 @@ Podfile.lock
 
 # macOS artifacts
 *.DS_Store
+
+# ignore docs again
+docs/

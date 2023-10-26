@@ -1,29 +1,12 @@
 # swift-cloudant
 
-A Swift Lang client for Cloudant and CouchDB
+A native client for direct interaction with Cloudant and CouchDB in Swift.
 
-Note, 6/22/2023:
+## Features
 
-This framework lives in this repo under the @IBM org, but is a fork from the [original source](https://github.com/cloudant/swift-cloudant).
+SwiftCloudant enables Swift applications to directly interface with Cloudant / CouchDB instances and clusters.
 
-This framework will be maintained over the medium / long term, but only on a best-effort basis by enterprising IBMers who like the project and want to work on it in their free time. 
-
-Please do not contact the [@Cloudant](https://github.com/cloudant) regarding this repository. Please also do not contact any previous maintainers. 
-The cloudant team has no connection to this repository and cannot help or provide any support.
-
-**Applications use swift-cloudant to store, index and query remote
-JSON data on Cloudant or CouchDB.**
-
-Swift-Cloudant is an [Apache CouchDB&trade;][acdb] client written in Swift. It
-is built by [Cloudant](https://cloudant.com) and is available under the
-[Apache 2.0 license][ap2].
-
-[ap2]: https://github.com/cloudant/sync-android/blob/master/LICENSE
-[acdb]: http://couchdb.apache.org/
-
-## Early-Release
-
-This is an early-release version of the library, with support for the following operations:
+The following operations are supported:
 
 - Getting documents by doc ID.
 - Updating and deleting documents.
@@ -33,34 +16,48 @@ This is an early-release version of the library, with support for the following 
 - Querying views.
 - Creating, deleting and querying indexes.
 
-We will be rounding out the feature set in upcoming releases.
+## Documentation
 
-**Currently it does not support being called from Objective-C.**
+[Documentation for SwiftCloudant](https://ibm.github.io/swift-cloudant/documentation/swiftcloudant/) is available via the repo's Github Pages site.
+ 
+The Github page for documentation is generated and updated automatically using a Github Workflow & DocC upon successful push to the `docs` branch of the repo.
 
 ## Support
 
-`SwiftCloudant` is supported, however since it is an early release it is
-on a "best effort" basis.
+`SwiftCloudant` is supported on a "best effort" basis, and only in the free time of software engineers at [IBM](https://github.com/ibm).
 
-### Platforms
+Although the original project was started by [@Cloudant](https://github.com/cloudant), that original repository was deprecated and archived in 2019. 
+Do not contact any maintainers of this project without commits later than June 2023. Cloudant has no connection to this repository and cannot help or provide any support-- if support is needed, please open an issue against [this project](https://github.com/ibm/swift-cloudant)'s repository.
 
-Currently Swift Cloudant supports:
+### Languages
+
+This package only supports Swift, it does not currently have any support for Objective-C. 
+
+Please open a PR if you would like to add support, or open an issue to request our team to look at adding support.
+
+### Supported Platforms
+
+Swift Cloudant support is fully verified for:
 
 Swift versions
 - Minimum Swift language version 4.2
 - Minimum Swift tools version 5.0
 
 Platforms
-- macOS
 - Linux
+- Swift-on-server (e.g. Vapor)
+- iOS
+- iPadOS
+- macOS (including catalyst applications)
 
-Swift Cloudant is unsupported on:
-
-- iOS (should work, but hasn't been tested)
+Swift Cloudant support is not verified / tested for:
+- visionOS
 - tvOS
 - watchOS
 
-## Using in your project
+(it may work, but we have not verified. feel free to issue a PR if you get it running for these platforms)
+
+## Usage
 
 SwiftCloudant is available using the Swift Package Manager and [CocoaPods](http://cocoapods.org).
 
@@ -137,9 +134,88 @@ let delete = DeleteDocumentOperation(id: "doc1",
 }
 client.add(operation:delete)
 ```
+
 ## Requirements
 
-Currently they are no third party dependencies.
+The only dependency of the framework is a plugin that is published and maintained by Apple for generating DocC documentation, but it isn't required for anything other than generating documentation.
+
+This framework has no third-party dependencies.
+
+### Developers
+
+#### Setup Local Env for Development
+
+In order to start development or to run tests, you must ensure you have a local instance of couchdb running with Docker.
+
+And alternative to Docker is Podman-- internally, IBM uses podman instead of Docker due to issues with running Docker Deskop. Simply install Podman and alias "docker" to "podman" and you can continue using the command "docker" since they are interchangable feature-wise.
+
+##### Develop Locally using Podman (aliased to Docker)
+
+- cd to project root
+- source local vars with: `source ./scripts/local/local-vars.sh`
+- run container pull & run script with: `zsh ./scripts/local/docker/pull-run-couch-latest.sh`
+
+Once this script finishes pulling the container, it will automaticaly configure the container as a single node cluster via API, and it will be immediately ready for use.
+
+Confirm the container is up by running:
+
+```docker ps```
+
+
+##### Cancel Running Local Environment
+
+Run the following script to stop and remove the container that was setup in the installatino script
+
+```zsh ./scripts/local/docker/stop.sh```
+
+Confirm the container is stopped and removed by running:
+
+```docker ps -a```
+
+
+#### Reset Local Environment
+
+Run the following script to stop and remove the container, and to subsequently run a fresh container, rebuilt using the latest image.
+
+```zsh ./scripts/local/docker/reset.sh```
+
+Confirm the container is up by running:
+
+```docker ps```
+
+
+### Github Workflows
+
+CI/CD is an important part of the sustainability and maintenance of any project. We leverage Github actions via workflow automations for that purpose.
+
+#### Test Github Workflows Locally (macOS)
+
+**Requirements**
+
+- homebrew
+    - install: (https://brew.sh/)[https://brew.sh/]
+- act
+    - `brew install act`
+
+**Test Scripts**
+
+There are a number of scripts in the `scripts/` subdirectory designed to make GH workflow testing easy without having to push to github.
+
+Please note: all test scripts must be run from the root of the project or they will break in unpredictable ways.
+
+These instructions assume you are using macOS, but you can easily adapt them to linux as well.
+
+
+
+**Supported Workflows**
+
+// TODO: add final info on documentation automation config
+spm-build-deploy-docs.yml
+
+
+// TODO: add final info on built & test automation config
+spm-build-test.yml
+
 
 ## Contributors
 
@@ -149,6 +225,13 @@ See [CONTRIBUTORS](CONTRIBUTORS).
 
 See [CONTRIBUTING](CONTRIBUTING.md).
 
-## License
+## Legal
 
-See [LICENSE](LICENSE)
+Swift-Cloudant is an [Apache CouchDB&trade;][acdb] client written in Swift. 
+
+It was originally is built by [Cloudant](https://cloudant.com), and is maintained by software engineers and Swift enthusiasts at [IBM](https://github.com/ibm). This project is available under the [Apache 2.0 license][ap2].
+
+[ap2]: https://github.com/cloudant/sync-android/blob/master/LICENSE
+[acdb]: http://couchdb.apache.org/
+
+See [LICENSE](LICENSE) for more information.
