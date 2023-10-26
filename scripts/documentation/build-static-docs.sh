@@ -8,4 +8,4 @@ swift package --allow-writing-to-directory \
 	--target SwiftCloudant \
 	--output-path ./docs \
 	--transform-for-static-hosting \
-	--hosting-base-path SwiftCloudant
+	--hosting-base-path swift-cloudant

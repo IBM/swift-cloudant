@@ -143,6 +143,47 @@ This framework has no third-party dependencies.
 
 ### Developers
 
+#### Setup Local Env for Development
+
+In order to start development or to run tests, you must ensure you have a local instance of couchdb running with Docker.
+
+And alternative to Docker is Podman-- internally, IBM uses podman instead of Docker due to issues with running Docker Deskop. Simply install Podman and alias "docker" to "podman" and you can continue using the command "docker" since they are interchangable feature-wise.
+
+##### Develop Locally using Podman (aliased to Docker)
+
+- cd to project root
+- source local vars with: `source ./scripts/local/local-vars.sh`
+- run container pull & run script with: `zsh ./scripts/local/docker/pull-run-couch-latest.sh`
+
+Once this script finishes pulling the container, it will automaticaly configure the container as a single node cluster via API, and it will be immediately ready for use.
+
+Confirm the container is up by running:
+
+```docker ps```
+
+
+##### Cancel Running Local Environment
+
+Run the following script to stop and remove the container that was setup in the installatino script
+
+```zsh ./scripts/local/docker/stop.sh```
+
+Confirm the container is stopped and removed by running:
+
+```docker ps -a```
+
+
+#### Reset Local Environment
+
+Run the following script to stop and remove the container, and to subsequently run a fresh container, rebuilt using the latest image.
+
+```zsh ./scripts/local/docker/reset.sh```
+
+Confirm the container is up by running:
+
+```docker ps```
+
+
 ### Github Workflows
 
 CI/CD is an important part of the sustainability and maintenance of any project. We leverage Github actions via workflow automations for that purpose.
