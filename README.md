@@ -152,7 +152,6 @@ And alternative to Docker is Podman-- internally, IBM uses podman instead of Doc
 ##### Develop Locally using Podman (aliased to Docker)
 
 - cd to project root
-- source local vars with: `source ./scripts/local/local-vars.sh`
 - run container pull & run script with: `zsh ./scripts/local/docker/pull-run-couch-latest.sh`
 
 Once this script finishes pulling the container, it will automaticaly configure the container as a single node cluster via API, and it will be immediately ready for use.
