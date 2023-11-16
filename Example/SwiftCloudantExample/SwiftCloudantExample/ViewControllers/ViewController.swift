@@ -17,8 +17,13 @@ class ViewController: UIViewController {
     @IBAction func createDBButtonAction(_ sender: Any) {
         createDB()
     }
+    @IBAction func createButtonAction(_ sender: Any) {
+        createNote()
+    }
     
     var couchClient: CouchDBClient?
+    let tempUUID = UUID().uuidString
+    let targetDB = "notes"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,6 +143,42 @@ class ViewController: UIViewController {
         }
         // add to queue for execution
         couchClient?.add(operation: createDB)
+    }
+    
+    func createNote() {
+        // pt 1: creation with metadata
+        let createdDate = Date().timeIntervalSinceReferenceDate
+        
+        let newNote: SCNote = .init(title: "test new notes title",
+                                    body: "nest note body",
+                                    created: Int(createdDate),
+                                    createdBy: tempUUID)
+        
+        // pt 2: getting it into db
+        
+        // transform into raw data
+        do {
+            // turn note into raw data
+            let noteData = try JSONEncoder().encode(newNote)
+        
+            // affirming that raw data can be turned into "[String: Any]"
+            if let json = try JSONSerialization.jsonObject(with: noteData) as? [String: Any] {
+                
+                // use serialized data to creat operation
+                let createNoteOperation = PutDocumentOperation(body: json, databaseName: targetDB) { (response, httpInfo, error) in
+                   if let error = error {
+                       print("error creating note: \(error)")
+                   } else {
+                       print("successful note creation: \(response)")
+                   }
+                }
+                
+                // add to queue for execution
+                couchClient?.add(operation: createNoteOperation)
+            }
+        } catch {
+            print("error encoding new note: \(error)")
+        }
     }
 }
 
