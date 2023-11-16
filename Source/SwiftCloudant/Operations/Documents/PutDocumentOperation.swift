@@ -51,6 +51,16 @@ public class PutDocumentOperation: CouchDatabaseOperation, JSONOperation {
         self.completionHandler = completionHandler
     }
     
+    public convenience init(id: String? = nil,
+                            revision: String? = nil,
+                            storableObject: Codable,
+                            databaseName:String,
+                            completionHandler: (([String : Any]?, HTTPInfo?, Error?) -> Void)? = nil){
+        
+        
+        
+    }
+    
     public let completionHandler: (([String : Any]?, HTTPInfo?, Error?) -> Void)?
     
     

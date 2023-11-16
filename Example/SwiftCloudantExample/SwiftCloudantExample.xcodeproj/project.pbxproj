@@ -14,6 +14,7 @@
 		C9AD59DF2A60766A00872DA2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9AD59DD2A60766A00872DA2 /* Main.storyboard */; };
 		C9AD59E12A60766C00872DA2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9AD59E02A60766C00872DA2 /* Assets.xcassets */; };
 		C9AD59E42A60766C00872DA2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9AD59E22A60766C00872DA2 /* LaunchScreen.storyboard */; };
+		C9CFCAA72AF41EE50040252B /* SCNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9CFCAA62AF41EE50040252B /* SCNote.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		C9AD59E02A60766C00872DA2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C9AD59E32A60766C00872DA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C9AD59E52A60766C00872DA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9CFCAA62AF41EE50040252B /* SCNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNote.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 		C9AD59D62A60766A00872DA2 /* SwiftCloudantExample */ = {
 			isa = PBXGroup;
 			children = (
+				C9CFCAA52AF41E0F0040252B /* Note */,
 				C991F2892A68E3B900CDADC3 /* SwiftCloudantExample.entitlements */,
 				C9AD59D72A60766A00872DA2 /* AppDelegate.swift */,
 				C9AD59D92A60766A00872DA2 /* SceneDelegate.swift */,
@@ -103,6 +106,14 @@
 				C991F2872A68DDF300CDADC3 /* Resources */,
 			);
 			path = SwiftCloudantExample;
+			sourceTree = "<group>";
+		};
+		C9CFCAA52AF41E0F0040252B /* Note */ = {
+			isa = PBXGroup;
+			children = (
+				C9CFCAA62AF41EE50040252B /* SCNote.swift */,
+			);
+			path = Note;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,6 +193,7 @@
 				C9AD59DC2A60766A00872DA2 /* ViewController.swift in Sources */,
 				C9AD59D82A60766A00872DA2 /* AppDelegate.swift in Sources */,
 				C9AD59DA2A60766A00872DA2 /* SceneDelegate.swift in Sources */,
+				C9CFCAA72AF41EE50040252B /* SCNote.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
