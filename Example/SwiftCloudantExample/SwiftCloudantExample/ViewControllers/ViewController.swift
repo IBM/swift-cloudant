@@ -149,36 +149,41 @@ class ViewController: UIViewController {
         // pt 1: creation with metadata
         let createdDate = Date().timeIntervalSinceReferenceDate
         
-        let newNote: SCNote = .init(title: "test new notes title",
+        let newNote: SCNote = .init(title: "asdfasdtest new notes title",
                                     body: "nest note body",
                                     created: Int(createdDate),
                                     createdBy: tempUUID)
         
         // pt 2: getting it into db
         
-        // transform into raw data
-        do {
-            // turn note into raw data
-            let noteData = try JSONEncoder().encode(newNote)
+//        // transform into raw data
+//        do {
+//            // turn note into raw data
+//            let noteData = try JSONEncoder().encode(newNote)
+//        
+//            // affirming that raw data can be turned into "[String: Any]"
+//            if let json = try JSONSerialization.jsonObject(with: noteData) as? [String: Any] {
+//                
+//                // use serialized data to creat operation
+//                let createNoteOperation = PutDocumentOperation(body: json, databaseName: targetDB) { (response, httpInfo, error) in
+//                   if let error = error {
+//                       print("error creating note: \(error)")
+//                   } else {
+//                       print("successful note creation: \(response)")
+//                   }
+//                }
+//                
+//                // add to queue for execution
+//                couchClient?.add(operation: createNoteOperation)
+//            }
+//        } catch {
+//            print("error encoding new note: \(error)")
+//        }
         
-            // affirming that raw data can be turned into "[String: Any]"
-            if let json = try JSONSerialization.jsonObject(with: noteData) as? [String: Any] {
-                
-                // use serialized data to creat operation
-                let createNoteOperation = PutDocumentOperation(body: json, databaseName: targetDB) { (response, httpInfo, error) in
-                   if let error = error {
-                       print("error creating note: \(error)")
-                   } else {
-                       print("successful note creation: \(response)")
-                   }
-                }
-                
-                // add to queue for execution
-                couchClient?.add(operation: createNoteOperation)
-            }
-        } catch {
-            print("error encoding new note: \(error)")
-        }
+        // new instantiation method
+        let createNoteOperation: PutDocumentOperation = .init(storableObject: newNote, databaseName: targetDB)
+        
+        couchClient?.add(operation: createNoteOperation)
     }
 }
 

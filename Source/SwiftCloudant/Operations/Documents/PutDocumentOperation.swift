@@ -44,7 +44,7 @@ public class PutDocumentOperation: CouchDatabaseOperation, JSONOperation {
      - parameter completionHandler: optional handler to run when the operation completes.
      */
     public init(id: String? = nil, revision: String? = nil, body: [String: Any], databaseName:String, completionHandler: (([String : Any]?, HTTPInfo?, Error?) -> Void)? = nil) {
-        self.id = id;
+        self.id = id
         self.revision = revision
         self.body = body
         self.databaseName = databaseName
@@ -53,17 +53,33 @@ public class PutDocumentOperation: CouchDatabaseOperation, JSONOperation {
     
     public convenience init(id: String? = nil,
                             revision: String? = nil,
-                            storableObject: Codable,
+                            storableObject: SCStorableObject,
                             databaseName:String,
                             completionHandler: (([String : Any]?, HTTPInfo?, Error?) -> Void)? = nil){
         
         
-        
+        do {
+            if let serializedJSON = try JSONSerialization.jsonObject(with: storableObject.getJsonData()) as? [String: Any] {
+                
+                self.init(body: serializedJSON, databaseName: databaseName)
+            } else {
+                self.init(body: ["": nil], databaseName: databaseName)
+            }
+            
+            // ecode from storable object
+            try encodeJSON(storableObject)
+            
+        } catch {
+            fatalError("cannot serialize or encode")
+        }
     }
+    // TODO: documentation
+    public private(set) var data: Data?
     
+    // TODO: documentation
     public let completionHandler: (([String : Any]?, HTTPInfo?, Error?) -> Void)?
     
-    
+    // TODO: documentation
     public let databaseName: String
     /**
      The document that this operation will modify.
@@ -77,11 +93,13 @@ public class PutDocumentOperation: CouchDatabaseOperation, JSONOperation {
 
     /** Body of document. Must be serialisable with NSJSONSerialization */
     public let body: [String: Any]
-
+    
+    // TODO: documentation
     public func validate() -> Bool {
         return JSONSerialization.isValidJSONObject(body)
     }
-
+    
+    // TODO: documentation
     public var method: String {
         get {
             if let _ = id {
@@ -91,9 +109,8 @@ public class PutDocumentOperation: CouchDatabaseOperation, JSONOperation {
             }
         }
     }
-
-    public private(set) var data: Data?
-
+    
+    // TODO: documentation
     public var endpoint: String {
         get {
             if let id = id {
@@ -104,7 +121,8 @@ public class PutDocumentOperation: CouchDatabaseOperation, JSONOperation {
         }
         
     }
-
+    
+    // TODO: documentation
     public var parameters: [String: String] {
         get {
             var items:[String:String] = [:]
@@ -117,8 +135,21 @@ public class PutDocumentOperation: CouchDatabaseOperation, JSONOperation {
         }
     }
     
+    // TODO: documentation
     public func serialise() throws {
         data = try JSONSerialization.data(withJSONObject: body)
     }
 
+}
+
+extension PutDocumentOperation {
+    func encodeJSON(_ storableObject: SCStorableObject) throws {
+        // encode directly to raw data
+        data = try JSONEncoder().encode(storableObject)
+    }
+    
+    // TODO: documentation
+    func validJSON() -> Bool {
+        return false
+    }
 }

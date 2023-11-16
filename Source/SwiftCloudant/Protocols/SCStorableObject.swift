@@ -1,9 +1,9 @@
 //
-//	SCNote.swift
-//  
+//  SCStorableObject.swift
+//
 //  SwiftCloudant
 //
-//  Created by Dan Burkhardt on 11/2/23.
+//  Created by Dan Burkhardt on 11/16/23.
 //  Copyright © 2023 IBM Corporation. All Rights Reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
@@ -15,18 +15,9 @@
 //  and limitations under the License.
 //
 
-import Foundation
-import SwiftCloudant
 
-struct SCNote: SCStorableObject {
-    var title: String
-    var body: String
-    var created: Int
-    var lastUpdated: Int?
-    var createdBy: String
-    var lastUpdatedBy: String?
-    
-    func getJsonData() throws -> Data {
-        return try JSONEncoder().encode(self)
-    }
+import Foundation
+
+public protocol SCStorableObject: Codable {
+    func getJsonData()throws -> Data 
 }
