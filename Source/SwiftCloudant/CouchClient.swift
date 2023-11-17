@@ -58,6 +58,7 @@ public struct ClientConfiguration {
      */
     public var clientTimeoutInterval: Double
     
+    // TODO: rm magic variables and reference framework configuration file instead
     /**
      Creates an ClientConfiguration
      - parameter shouldBackOff: Should the client automatically back off.
@@ -93,6 +94,7 @@ public class CouchDBClient {
     internal let password: String?
     internal let rootURL: URL
     
+    // TODO: rm magic var and source from env and project vars instead
     // The version number of swift-cloudant, as a string
     static let version = "0.9.1-SNAPSHOT"
     

@@ -154,32 +154,7 @@ class ViewController: UIViewController {
                                     created: Int(createdDate),
                                     createdBy: tempUUID)
         
-        // pt 2: getting it into db
-        
-//        // transform into raw data
-//        do {
-//            // turn note into raw data
-//            let noteData = try JSONEncoder().encode(newNote)
-//        
-//            // affirming that raw data can be turned into "[String: Any]"
-//            if let json = try JSONSerialization.jsonObject(with: noteData) as? [String: Any] {
-//                
-//                // use serialized data to creat operation
-//                let createNoteOperation = PutDocumentOperation(body: json, databaseName: targetDB) { (response, httpInfo, error) in
-//                   if let error = error {
-//                       print("error creating note: \(error)")
-//                   } else {
-//                       print("successful note creation: \(response)")
-//                   }
-//                }
-//                
-//                // add to queue for execution
-//                couchClient?.add(operation: createNoteOperation)
-//            }
-//        } catch {
-//            print("error encoding new note: \(error)")
-//        }
-        
+        // pt 2: put the document into the database
         // new instantiation method
         let createNoteOperation: PutDocumentOperation = .init(storableObject: newNote, databaseName: targetDB)
         
@@ -187,3 +162,19 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController: CouchOperationDelegate {
+    // handles response with http info
+    func operationDidRespond(with info: SwiftCloudant.HTTPInfo) {
+        print("operation responded with info: \(info)")
+    }
+    
+    // handles response with success result
+    func operationDidSucceed(with result: Any) {
+        print("operation succeeded with result: \(result)")
+    }
+    
+    // handles operation error
+    func operationDidFail(with error: Error) {
+        print("operation failed with error: \(error)")
+    }
+}

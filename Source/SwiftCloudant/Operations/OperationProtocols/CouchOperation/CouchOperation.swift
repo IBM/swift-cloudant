@@ -23,6 +23,9 @@ import Foundation
  */
 public protocol CouchOperation {
     
+    /// An optional delegate to recieve operation execution and lifecycle events.
+    var operationDelegate: CouchOperationDelegate? { get set }
+    
     /**
      The CouchDB API endpoint to call, for example `/exampleDB/document1/` or `/_all_dbs`
      */

@@ -34,6 +34,8 @@ import Foundation
  */
 public class PutDocumentOperation: CouchDatabaseOperation, JSONOperation {
     
+    public var operationDelegate: CouchOperationDelegate?
+    
     /**
      Creates the operation.
      
