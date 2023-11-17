@@ -20,6 +20,6 @@ import Foundation
 
 public protocol CouchOperationDelegate {
     func operationDidRespond(with info: HTTPInfo)
-    func operationDidSucceed(with result: Any)
+    func operationDidSucceed(with result: Data)
     func operationDidFail(with error: Swift.Error)
 }

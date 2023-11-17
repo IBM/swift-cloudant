@@ -26,12 +26,14 @@ public extension CouchOperation {
         self.callCompletionHandler(response: nil, httpInfo: nil, error: error)
     }
     
+    // TODO: this is bad-- we shouldn't have defualt implementations that do nothing. we need to mitigate these and eventually remove them.
     // default implementation of serialise, does nothing.
     func serialise() throws { return }
     
     // default implementation, does nothing.
     func processResponse(json: Any) { return }
     
+    // TODO: deal with this another way vs magic variable
     var contentType: String { return "application/json" }
     
     var data: Data? { return nil }

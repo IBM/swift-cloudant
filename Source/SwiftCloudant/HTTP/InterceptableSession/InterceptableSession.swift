@@ -270,7 +270,7 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
                     NSLog("Failed to get response from server")
                     return
             }
-            
+            // TODO: move magic vars for status codes to an HTTP status code enum
             if response.statusCode / 100 == 2{
             
                 do {
@@ -323,7 +323,7 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
     private class func userAgent() -> String {
         let processInfo = ProcessInfo.processInfo
         let osVersion = processInfo.operatingSystemVersionString
-
+        // TODO: add additional useragent vars for catalyst, macOS, and possibly other apple platform devices
         #if os(iOS)
             let platform = "ios"
         #elseif os(OSX)
@@ -336,7 +336,7 @@ internal class InterceptableSession: NSObject, URLSessionDelegate, URLSessionTas
             let platform = "unknown";
         #endif
 
-        return "SwiftCloudant-LTS:\(CouchDBClient.version):\(platform):\(osVersion))"
+        return "SwiftCloudant:\(CouchDBClient.version):\(platform):\(osVersion))"
 
     }
 }

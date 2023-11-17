@@ -101,7 +101,8 @@ public class Operation: Foundation.Operation, HTTPRequestOperation
             }
         }
     }
-
+    
+    // TODO: magic var, move to config object
     internal var rootURL: URL = URL(string: "http://cloudant.invalid")!
 
     internal var httpPath: String {
@@ -134,6 +135,7 @@ public class Operation: Foundation.Operation, HTTPRequestOperation
     internal var executor: OperationRequestExecutor? = nil
 
     internal func processResponse(data: Data?, httpInfo: HTTPInfo?, error: Swift.Error?) {
+        // pass to operation func for handling
         couchOperation.processResponse(data: data, httpInfo: httpInfo, error: error)
     }
 
@@ -146,7 +148,11 @@ public class Operation: Foundation.Operation, HTTPRequestOperation
             }
 
             if !couchOperation.validate() {
-                couchOperation.callCompletionHandler(error: Error.validationFailed)
+                let errorType = Error.validationFailed
+                // pass to completion handler
+                couchOperation.callCompletionHandler(error: errorType)
+                // pass to delegate
+                couchOperation.operationDelegate?.operationDidFail(with: errorType)
                 isFinished = true
                 return
             }

@@ -155,9 +155,14 @@ class ViewController: UIViewController {
                                     createdBy: tempUUID)
         
         // pt 2: put the document into the database
-        // new instantiation method
+        // using the new convenience init
         let createNoteOperation: PutDocumentOperation = .init(storableObject: newNote, databaseName: targetDB)
         
+        
+        // take delegation of operation lifecycle
+        createNoteOperation.operationDelegate = self
+        
+        // queue operation for execution via client
         couchClient?.add(operation: createNoteOperation)
     }
 }

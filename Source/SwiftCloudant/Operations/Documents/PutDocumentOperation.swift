@@ -150,3 +150,16 @@ extension PutDocumentOperation {
         data = try JSONEncoder().encode(storableObject)
     }
 }
+
+extension PutDocumentOperation {
+    // checking if implementing this
+    // actually recieves the response
+    // outcome for processing
+    public func processResponse(data: Data?, httpInfo: HTTPInfo?, error: Error?) {
+        if let error = error {
+            operationDelegate?.operationDidFail(with: error)
+        }
+        // validation
+        
+    }
+}
