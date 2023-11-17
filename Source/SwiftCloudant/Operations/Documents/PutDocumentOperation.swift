@@ -147,9 +147,4 @@ extension PutDocumentOperation {
         // encode directly to raw data
         data = try JSONEncoder().encode(storableObject)
     }
-    
-    // TODO: documentation
-    func validJSON() -> Bool {
-        return false
-    }
 }
