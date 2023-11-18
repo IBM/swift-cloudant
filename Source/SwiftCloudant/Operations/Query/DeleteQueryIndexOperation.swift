@@ -37,6 +37,8 @@ import Foundation
  */
 public class DeleteQueryIndexOperation: CouchDatabaseOperation, JSONOperation {
     
+    public var operationDelegate: CouchOperationDelegate?
+
     /**
      An enum representing the possible index types for Query.
      */

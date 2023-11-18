@@ -53,7 +53,7 @@
                                             <constraint firstAttribute="height" constant="40" id="4Zd-iM-QeC"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Create DB"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Create New DB (random name)"/>
                                         <connections>
                                             <action selector="createDBButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ldk-85-POh"/>
                                         </connections>
@@ -64,7 +64,7 @@
                                             <constraint firstAttribute="height" constant="40" id="8ss-fo-5PT"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Create Document"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Create Note"/>
                                         <connections>
                                             <action selector="createButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ur0-yq-UC1"/>
                                         </connections>

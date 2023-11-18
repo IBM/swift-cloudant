@@ -38,6 +38,8 @@ import Foundation
  */
 public class PutBulkDocsOperation : CouchDatabaseOperation, JSONOperation {
     
+    public var operationDelegate: CouchOperationDelegate?
+    
     public typealias Json = [[String: Any]]
 
     public let databaseName: String

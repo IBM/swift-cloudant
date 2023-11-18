@@ -8,6 +8,13 @@
 import UIKit
 import SwiftCloudant
 
+/// A UUID for use in all operations during the current session
+///
+/// - Note: this will set to a new random id every time the
+/// application is launched.
+///
+var sessionUserID: String = UUID().uuidString
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var messageLabel: UILabel!
@@ -22,7 +29,6 @@ class ViewController: UIViewController {
     }
     
     var couchClient: CouchDBClient?
-    let tempUUID = UUID().uuidString
     let targetDB = "notes"
     
     override func viewDidLoad() {
@@ -152,7 +158,7 @@ class ViewController: UIViewController {
         let newNote: SCNote = .init(title: "asdfasdtest new notes title",
                                     body: "nest note body",
                                     created: Int(createdDate),
-                                    createdBy: tempUUID)
+                                    createdBy: sessionUserID)
         
         // pt 2: put the document into the database
         // using the new convenience init
@@ -168,14 +174,19 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: CouchOperationDelegate {
+    
     // handles response with http info
     func operationDidRespond(with info: SwiftCloudant.HTTPInfo) {
         print("operation responded with info: \(info)")
     }
     
     // handles response with success result
-    func operationDidSucceed(with result: Any) {
+    func operationDidSucceed(with result: Data) {
         print("operation succeeded with result: \(result)")
+        // attempt to decode from data
+        if let successRes: PutDocumentSuccess = .fromData(result) {
+            print("success result type: \(successRes)")
+        }
     }
     
     // handles operation error

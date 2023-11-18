@@ -76,6 +76,9 @@ internal extension MangoOperation {
  */
 public class FindDocumentsOperation: CouchDatabaseOperation, MangoOperation, JSONOperation {
     
+    public var operationDelegate: CouchOperationDelegate?
+    
+    
     /**
     
      Creates the operation.

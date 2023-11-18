@@ -41,6 +41,8 @@ import Foundation
  */
 public class PutAttachmentOperation: CouchDatabaseOperation, JSONOperation {
     
+    public var operationDelegate: CouchOperationDelegate?
+
     /**
      Creates the operation.
      

@@ -33,6 +33,8 @@ import Foundation
  */
 public class CreateDatabaseOperation: CouchOperation, JSONOperation {
 
+    public var operationDelegate: CouchOperationDelegate?
+
     /**
      Creates the operation.
      

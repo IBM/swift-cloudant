@@ -135,7 +135,7 @@ public class Operation: Foundation.Operation, HTTPRequestOperation
     internal var executor: OperationRequestExecutor? = nil
 
     internal func processResponse(data: Data?, httpInfo: HTTPInfo?, error: Swift.Error?) {
-        // pass to operation func for handling
+        // pass to operation for handling
         couchOperation.processResponse(data: data, httpInfo: httpInfo, error: error)
     }
 

@@ -40,6 +40,8 @@ import Foundation
  */
 public class CreateJSONQueryIndexOperation: CouchDatabaseOperation, MangoOperation, JSONOperation {
     
+    public var operationDelegate: CouchOperationDelegate?
+
     /**
      Creates the operation
      - parameter databaseName : The name of the database where the index should be created.

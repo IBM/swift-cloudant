@@ -35,7 +35,8 @@ import Foundation
  */
 public class GetAllDocsOperation : CouchOperation, ViewOperation, JSONOperation {
     public typealias Json = [String : Any]
-
+    
+    public var operationDelegate: CouchOperationDelegate?
     
     public let completionHandler: (([String : Any]?, HTTPInfo?, Error?) -> Void)?
     

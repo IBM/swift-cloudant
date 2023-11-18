@@ -33,6 +33,8 @@ import Foundation
  ````
  */
 public class DeleteDocumentOperation: CouchDatabaseOperation, JSONOperation {
+    
+    public var operationDelegate: CouchOperationDelegate?
 
     /**
     

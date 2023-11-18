@@ -40,6 +40,8 @@ import Foundation
  */
 public class CreateTextQueryIndexOperation: CouchDatabaseOperation, MangoOperation, JSONOperation {
     
+    public var operationDelegate: CouchOperationDelegate?
+
     /**
      Creates the operation.
      

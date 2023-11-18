@@ -38,6 +38,8 @@ import Foundation
  */
 public class DeleteAttachmentOperation: CouchDatabaseOperation, JSONOperation {
     
+    public var operationDelegate: CouchOperationDelegate?
+
     /**
     
      Creates the operation
