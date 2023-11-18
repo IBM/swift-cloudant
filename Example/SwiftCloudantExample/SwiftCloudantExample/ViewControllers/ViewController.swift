@@ -185,8 +185,8 @@ extension ViewController: CouchOperationDelegate {
         print("operation succeeded with result: \(result)")
         // attempt to decode from data
         if let successRes: PutDocumentSuccess = .fromData(result) {
-            print("success result type: \(successRes)")
-        }
+            print("success result prettified:\n\(successRes.prettified)")
+        }        
     }
     
     // handles operation error

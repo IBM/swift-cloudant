@@ -20,16 +20,8 @@ import Foundation
 
 /// A swift representation of the JSON response
 /// to a successful PutDocumentOperation.
-public class PutDocumentSuccess: CouchOperationOutcome {
-    public var ok: String = ""
-    public var id: String = ""
-    public var rev: String = ""
-        
-    override init() { 
-        super.init()
-    }
-    
-    required init(from decoder: Decoder) throws {
-        super.init()
-    }
+public struct PutDocumentSuccess: CouchOperationOutcome {
+    public var ok: Bool
+    public var id: String
+    public var rev: String
 }

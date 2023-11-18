@@ -19,10 +19,15 @@
 import Foundation
 
 /// A class containing shared operations for all inheriting `CouchOperationOutcome` types.
-public class CouchOperationOutcome: Codable {
+public protocol CouchOperationOutcome: Codable {
+    
+}
+
+/// Default implementation for all adopting types.
+extension CouchOperationOutcome {
     /// Returns an instance of type `T` from `Data`
-    /// if it is possible to decode `Data` as `T`.
-    public static func fromData<T>(_ data: Data) -> T? where T: Codable {
+    /// if it is possible to encode `Data` as `T`.
+    public static func fromData<T: Codable>(_ data: Data) -> T? {
         do {
             let decoded = try JSONDecoder().decode(T.self, from: data)
             return decoded
@@ -33,7 +38,7 @@ public class CouchOperationOutcome: Codable {
     }
     /// Attempts to return an encoded instance
     /// using `JSONEncoder` as raw `Data`.
-    var encoded: Data? {
+    public var encoded: Data? {
         do {
             let encoded = try JSONEncoder().encode(self)
             return encoded
@@ -46,7 +51,7 @@ public class CouchOperationOutcome: Codable {
     ///
     /// - Note: if `JSONEncoder` is unable to encode
     /// an error will be returned
-    var prettyfied: String {
+    public var prettified: String {
         // setup error string
         let errString = "SwiftCloudant::ERROR:: could not prettify"
         // setup encoder with formatting
@@ -54,7 +59,7 @@ public class CouchOperationOutcome: Codable {
         encoder.outputFormatting = .prettyPrinted
         // attempt to prettify
         do {
-            let encoded = try JSONEncoder().encode(self)
+            let encoded = try encoder.encode(self)
             if let prettyStr = String(data: encoded, encoding: .utf8) {
                 return prettyStr
             } else {
