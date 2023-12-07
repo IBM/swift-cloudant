@@ -25,11 +25,20 @@ class ViewController: UIViewController {
         createDB()
     }
     @IBAction func createButtonAction(_ sender: Any) {
-        createNote()
+        //createNote()
+        
+        createNoteAsync()
     }
     
     var couchClient: CouchDBClient?
     let targetDB = "notes"
+    
+    struct DocumentWithAttachedImage {
+        var image: UIImage
+        var document: SCStorableObject
+    }
+    
+    let documentsWithAttachments: [DocumentWithAttachedImage] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -171,6 +180,32 @@ class ViewController: UIViewController {
         // queue operation for execution via client
         couchClient?.add(operation: createNoteOperation)
     }
+    
+    func createNoteAsync() {
+        // pt 1: creation with metadata
+        let createdDate = Date().timeIntervalSinceReferenceDate
+        
+        let newNote: SCNote = .init(title: "ASYNC TITLE",
+                                    body: "nest note body",
+                                    created: Int(createdDate),
+                                    createdBy: sessionUserID)
+        
+        // pt 2: put the document into the database
+        // using the new convenience init
+        let createNoteOperation: PutDocumentOperation = .init(storableObject: newNote, databaseName: targetDB)
+        
+        Task {
+            let (data, _ ) = try await couchClient!.execAsync(operation: createNoteOperation)
+            
+            if let successRes: PutDocumentSuccess = .fromData(data) {
+                print("success result prettified:\n\(successRes.prettified)")
+            }
+        }
+    }
+    
+    func createAttachment(docID: String, docRev: String) {
+        // get attachment document
+    }
 }
 
 extension ViewController: CouchOperationDelegate {
@@ -192,5 +227,6 @@ extension ViewController: CouchOperationDelegate {
     // handles operation error
     func operationDidFail(with error: Error) {
         print("operation failed with error: \(error)")
+        
     }
 }

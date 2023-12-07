@@ -153,6 +153,12 @@ public class CouchDBClient {
         operation.rootURL = self.rootURL
         queue.addOperation(operation)
     }
+    
+    @available(iOS 13.0.0, *)
+    public func execAsync(operation: CouchOperation) async throws -> (Data, URLResponse) {
+        let cOp = Operation(couchOperation: operation)
+        return try await cOp.startAsync()
+    }
 
 }
 

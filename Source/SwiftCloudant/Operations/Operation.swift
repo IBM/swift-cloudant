@@ -103,7 +103,7 @@ public class Operation: Foundation.Operation, HTTPRequestOperation
     }
     
     // TODO: magic var, move to config object
-    internal var rootURL: URL = URL(string: "http://cloudant.invalid")!
+    internal var rootURL: URL = URL(string: "http://localhost:5984")!
 
     internal var httpPath: String {
         return couchOperation.endpoint
@@ -167,6 +167,33 @@ public class Operation: Foundation.Operation, HTTPRequestOperation
             couchOperation.callCompletionHandler(error: error)
             isFinished = true
         }
+    }
+    
+    @available(iOS 13.0.0, *)
+    final public func startAsync() async throws -> (Data, URLResponse) {
+        // Always check for cancellation before launching the task
+//        if isCancelled {
+//            isFinished = true
+//            return
+//        }
+
+        if !couchOperation.validate() {
+            let errorType = Error.validationFailed
+            isFinished = true
+            throw errorType
+        }
+
+        try couchOperation.serialise()
+
+        // start the operation
+        isExecuting = true
+        executor = OperationRequestExecutor(operation: self)
+        
+        
+        
+        let execResult: (Data, URLResponse) = try await executor!.executeRequest()
+        
+        return execResult
     }
 
     final public func completeOperation() {

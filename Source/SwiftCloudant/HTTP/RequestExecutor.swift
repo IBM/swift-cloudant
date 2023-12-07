@@ -84,7 +84,7 @@ class OperationRequestExecutor: InterceptableSessionDelegate {
     /**
      Executes the HTTP request for the operation held in the `operation` property
      */
-    func executeRequest () {
+    func executeRequest() {
 
         do {
             let builder = OperationRequestBuilder(operation: self.operation)
@@ -95,7 +95,17 @@ class OperationRequestExecutor: InterceptableSessionDelegate {
             self.operation.processResponse(data: nil, httpInfo: nil, error: error)
             self.operation.completeOperation()
         }
-
+    }
+    
+    /**
+     Executes the HTTP request for the operation held in the `operation` property
+     */
+    @available(iOS 13.0.0, *)
+    func executeRequest() async throws -> (Data, URLResponse) {
+        let builder = OperationRequestBuilder(operation: self.operation)
+        let request = try builder.makeRequest()
+        let (data, response) = try await URLSession.shared.data(for: request)
+        return (data, response)
     }
 
     /**
