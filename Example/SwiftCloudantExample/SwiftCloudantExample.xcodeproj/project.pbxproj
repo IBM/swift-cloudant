@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C96D9C802B225DAD00CD35E9 /* Bagel in Frameworks */ = {isa = PBXBuildFile; productRef = C96D9C7F2B225DAD00CD35E9 /* Bagel */; };
 		C991F2902A68E45B00CDADC3 /* SwiftCloudant in Frameworks */ = {isa = PBXBuildFile; productRef = C991F28F2A68E45B00CDADC3 /* SwiftCloudant */; };
 		C9AD59D82A60766A00872DA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AD59D72A60766A00872DA2 /* AppDelegate.swift */; };
 		C9AD59DA2A60766A00872DA2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AD59D92A60766A00872DA2 /* SceneDelegate.swift */; };
@@ -36,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C96D9C802B225DAD00CD35E9 /* Bagel in Frameworks */,
 				C991F2902A68E45B00CDADC3 /* SwiftCloudant in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,6 +136,7 @@
 			name = SwiftCloudantExample;
 			packageProductDependencies = (
 				C991F28F2A68E45B00CDADC3 /* SwiftCloudant */,
+				C96D9C7F2B225DAD00CD35E9 /* Bagel */,
 			);
 			productName = SwiftCloudantTestProject;
 			productReference = C9AD59D42A60766A00872DA2 /* SwiftCloudantExample.app */;
@@ -163,6 +166,9 @@
 				Base,
 			);
 			mainGroup = C9AD59CB2A60766A00872DA2;
+			packageReferences = (
+				C96D9C7E2B225DAD00CD35E9 /* XCRemoteSwiftPackageReference "Bagel" */,
+			);
 			productRefGroup = C9AD59D52A60766A00872DA2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -420,7 +426,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		C96D9C7E2B225DAD00CD35E9 /* XCRemoteSwiftPackageReference "Bagel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yagiz/Bagel";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		C96D9C7F2B225DAD00CD35E9 /* Bagel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C96D9C7E2B225DAD00CD35E9 /* XCRemoteSwiftPackageReference "Bagel" */;
+			productName = Bagel;
+		};
 		C991F28F2A68E45B00CDADC3 /* SwiftCloudant */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftCloudant;

@@ -169,7 +169,9 @@ public class Operation: Foundation.Operation, HTTPRequestOperation
         }
     }
     
+    
     @available(iOS 13.0.0, *)
+    @available(swift 5.5)
     final public func startAsync() async throws -> (Data, URLResponse) {
         // Always check for cancellation before launching the task
 //        if isCancelled {
@@ -188,8 +190,6 @@ public class Operation: Foundation.Operation, HTTPRequestOperation
         // start the operation
         isExecuting = true
         executor = OperationRequestExecutor(operation: self)
-        
-        
         
         let execResult: (Data, URLResponse) = try await executor!.executeRequest()
         

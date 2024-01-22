@@ -101,6 +101,7 @@ class OperationRequestExecutor: InterceptableSessionDelegate {
      Executes the HTTP request for the operation held in the `operation` property
      */
     @available(iOS 13.0.0, *)
+    @available(swift 5.5)
     func executeRequest() async throws -> (Data, URLResponse) {
         let builder = OperationRequestBuilder(operation: self.operation)
         let request = try builder.makeRequest()

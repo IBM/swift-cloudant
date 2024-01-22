@@ -155,8 +155,11 @@ public class CouchDBClient {
     }
     
     @available(iOS 13.0.0, *)
+    @available(swift 5.5)
     public func execAsync(operation: CouchOperation) async throws -> (Data, URLResponse) {
         let cOp = Operation(couchOperation: operation)
+        cOp.mSession = self.session
+        cOp.rootURL = self.rootURL
         return try await cOp.startAsync()
     }
 

@@ -8,6 +8,8 @@
 import UIKit
 import SwiftCloudant
 
+
+
 /// A UUID for use in all operations during the current session
 ///
 /// - Note: this will set to a new random id every time the
@@ -195,7 +197,7 @@ class ViewController: UIViewController {
         let createNoteOperation: PutDocumentOperation = .init(storableObject: newNote, databaseName: targetDB)
         
         Task {
-            let (data, _ ) = try await couchClient!.execAsync(operation: createNoteOperation)
+            let (data, response ) = try await couchClient!.execAsync(operation: createNoteOperation)
             
             if let successRes: PutDocumentSuccess = .fromData(data) {
                 print("success result prettified:\n\(successRes.prettified)")
