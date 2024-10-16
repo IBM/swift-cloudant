@@ -20,11 +20,16 @@ import Foundation
 
 /// A class containing shared operations for all inheriting `CouchOperationOutcome` types.
 public protocol CouchOperationOutcome: Codable {
-    
 }
 
 /// Default implementation for all adopting types.
 extension CouchOperationOutcome {
+    /// Returns a `Bool` indicating whether or not the
+    /// value for self.body is serializable as valid JSON
+    /// using `JSONSerialization`.
+    public func validate() -> Bool {
+        return JSONSerialization.isValidJSONObject(body)
+    }
     /// Returns an instance of type `T` from `Data`
     /// if it is possible to encode `Data` as `T`.
     public static func fromData<T: Codable>(_ data: Data) -> T? {

@@ -125,6 +125,7 @@ public class PutDocumentOperation: CouchDatabaseOperation, JSONOperation {
         get {
             if let _ = id {
                 return "PUT"
+                
             } else {
                 return "POST"
             }

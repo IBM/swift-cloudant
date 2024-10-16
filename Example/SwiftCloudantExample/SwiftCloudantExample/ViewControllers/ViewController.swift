@@ -21,7 +21,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var messageLabel: UILabel!
     @IBAction func getAllDBsButtonAction(_ sender: Any) {
-        getAllDBs()
+//        getAllDBs()
     }
     @IBAction func createDBButtonAction(_ sender: Any) {
         createDB()
@@ -137,7 +137,6 @@ class ViewController: UIViewController {
         
         // use DB name string in new db creation operation
         let createDB = CreateDatabaseOperation(name: newDBName) { (response, info, error) in
-            
             // handle error
            if let error = error {
                let msg = error.localizedDescription
@@ -197,10 +196,15 @@ class ViewController: UIViewController {
         let createNoteOperation: PutDocumentOperation = .init(storableObject: newNote, databaseName: targetDB)
         
         Task {
-            let (data, response ) = try await couchClient!.execAsync(operation: createNoteOperation)
-            
-            if let successRes: PutDocumentSuccess = .fromData(data) {
-                print("success result prettified:\n\(successRes.prettified)")
+            do {
+                let (data, _ ) = try await couchClient!.execAsync(operation: createNoteOperation)
+                
+                if let successRes: PutDocumentSuccess = .fromData(data) {
+                    print("success result prettified:\n\(successRes.prettified)")
+                    print("new document id: \(successRes.id)")
+                }
+            } catch {
+                print("error: \(error)")
             }
         }
     }

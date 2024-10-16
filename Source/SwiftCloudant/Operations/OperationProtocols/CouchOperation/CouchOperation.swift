@@ -107,3 +107,35 @@ public protocol CouchOperation {
      */
     func serialise() throws
 }
+
+// Default implementation
+public extension CouchOperation {
+    /// Calls the completion handler for the operation with the specified error.
+    ///
+    /// - Note: Subclasses need to override this to call the
+    /// completion handler they have defined.
+    ///
+    func callCompletionHandler(error: Swift.Error) {
+        self.callCompletionHandler(response: nil, httpInfo: nil, error: error)
+    }
+    
+    // TODO: this is bad-- we shouldn't have defualt implementations that do nothing. we need to mitigate these and eventually remove them.
+    /// default implementation of serialise, does nothing.
+    func serialise() throws { return }
+    
+    /// default implementation, does nothing.
+    func processResponse(json: Any) { return }
+    
+    // TODO: deal with this another way vs magic variable
+    var contentType: String { return "application/json" }
+    
+    var data: Data? { return nil }
+    
+    var parameters: [String: String] { return [:] }
+    
+    var method: String { return "GET" }
+    
+    func validateSerializable() -> Bool {
+        return JSONSerialization.isValidJSONObject(self)
+    }
+}

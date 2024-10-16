@@ -162,7 +162,6 @@ public class CouchDBClient {
         cOp.rootURL = self.rootURL
         return try await cOp.startAsync()
     }
-
 }
 
 /**
