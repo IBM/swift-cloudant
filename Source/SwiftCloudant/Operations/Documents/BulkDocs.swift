@@ -93,7 +93,6 @@ public class PutBulkDocsOperation : CouchDatabaseOperation, JSONOperation {
         return JSONSerialization.isValidJSONObject(documents)
     }
     
-    
     private var jsonData: Data?
     
     public func serialise() throws {

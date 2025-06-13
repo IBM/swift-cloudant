@@ -28,7 +28,7 @@ extension CouchOperationOutcome {
     /// value for self.body is serializable as valid JSON
     /// using `JSONSerialization`.
     public func validate() -> Bool {
-        return JSONSerialization.isValidJSONObject(body)
+        return JSONSerialization.isValidJSONObject(self)
     }
     /// Returns an instance of type `T` from `Data`
     /// if it is possible to encode `Data` as `T`.

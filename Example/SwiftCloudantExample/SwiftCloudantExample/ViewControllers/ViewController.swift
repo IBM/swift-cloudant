@@ -21,7 +21,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var messageLabel: UILabel!
     @IBAction func getAllDBsButtonAction(_ sender: Any) {
-//        getAllDBs()
+        getAllDBs()
     }
     @IBAction func createDBButtonAction(_ sender: Any) {
         createDB()
@@ -68,7 +68,7 @@ class ViewController: UIViewController {
         // init client
         couchClient = .init(url: couchURL,
                             username: "admin",
-                            password: "p@ssw0rd",
+                            password: "",
                             configuration: config)
     }
     
@@ -140,7 +140,7 @@ class ViewController: UIViewController {
             // handle error
            if let error = error {
                let msg = error.localizedDescription
-               self.updateMessagelabel("error message: \(msg)")
+               self.updateMessagelabel("error message: \(msg), info: \(info)")
            }
             // handle unwrapped response
             if let response = response {

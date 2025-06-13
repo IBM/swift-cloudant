@@ -138,4 +138,8 @@ public extension CouchOperation {
     func validateSerializable() -> Bool {
         return JSONSerialization.isValidJSONObject(self)
     }
+    
+    func validate() -> Bool {
+        return JSONSerialization.isValidJSONObject(self)
+    }
 }

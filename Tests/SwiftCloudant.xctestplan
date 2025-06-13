@@ -34,13 +34,7 @@
     ]
   },
   "testTargets" : [
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "SwiftCloudantTests",
-        "name" : "SwiftCloudantTests"
-      }
-    }
+
   ],
   "version" : 1
 }
