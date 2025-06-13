@@ -1,5 +1,5 @@
 <!--
-Thanks for your hard work, please ensure all items are complete before opening.
+Required for all Non-Maintainer Contributions: thank you for your Pull Request, please ensure all items are complete before submitting for review.
 -->
 ## Checklist
 

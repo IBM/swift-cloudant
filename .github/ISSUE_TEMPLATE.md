@@ -14,10 +14,13 @@ Provide the simplest code sample you can, in context, that reproduces the issue.
 
 ### 3. What actually happened
 
-## Environment details
+## Environment & local maching details
 <!--
-- Version(s) that are affected by this issue.
+- Operating system
+    > macOS v13.3.5
+    > Ubuntu v22.04
+- Swift version
+    > 3.0.1
+- Framework release version(s) that are affected by the issue you are reporting.
     > 2.0.2
-- Swift version and platform
-    > 3.0.1 Linux
 -->

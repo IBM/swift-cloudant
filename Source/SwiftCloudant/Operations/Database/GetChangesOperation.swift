@@ -36,6 +36,8 @@ import Foundation
  */
 public class GetChangesOperation : CouchDatabaseOperation, JSONOperation {
     
+    public var operationDelegate: CouchOperationDelegate?
+
     public typealias Json = [String: Any]
 
     /**

@@ -32,6 +32,8 @@ import Foundation
  }
  */
 public class DeleteDatabaseOperation: CouchOperation, JSONOperation {
+    
+    public var operationDelegate: CouchOperationDelegate?
 
     /**
      Creates the operation

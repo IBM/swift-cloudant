@@ -1,0 +1,54 @@
+name: spm-build-test
+
+on:
+  push:
+    branches: [ "main", "dev", "test" ]
+  pull_request:
+    types:
+      - created
+
+jobs:
+
+  build-test:
+
+    runs-on: macos-latest
+
+    steps:
+    - name: Pull, run, and config latest couchDB image
+      id: couchdb-up
+      env:
+        SERVER_USER: "admin"
+        SERVER_PASSWORD: "p@ssw0rd"
+      run: |
+        # pull the latest couchdb image
+        # and run with env from local-vars
+        docker run \
+          --name couchdb \
+          -d \
+          -p 5984:5984 -p 80:80 \
+          -e COUCHDB_USER=$SERVER_USER \
+          -e COUCHDB_PASSWORD=$SERVER_PASSWORD \
+          couchdb:latest &&
+
+        # brief pause to let service come online
+        sleep 1
+
+        # configure couchdb as single node to finalize setup
+        curl -X POST $SERVER_URL/_cluster_setup \
+          -H 'Content-Type: application/json' \
+          -H 'Authorization: Basic YWRtaW46cEBzc3cwcmQ=' \
+          -d '{"action":"enable_single_node","bind_address": "0.0.0.0"}'
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Swift Build
+      run: swift build -v
+    
+    - name: Swift Test
+      run: swift test -v
+
+    - name: Stop and remove CouchDB container
+      id: couchdb-down
+      run: |
+        docker container stop couchdb && docker container rm couchdb

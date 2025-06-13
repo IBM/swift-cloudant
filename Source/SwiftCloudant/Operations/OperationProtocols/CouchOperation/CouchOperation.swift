@@ -23,6 +23,9 @@ import Foundation
  */
 public protocol CouchOperation {
     
+    /// An optional delegate to recieve operation execution and lifecycle events.
+    var operationDelegate: CouchOperationDelegate? { get set }
+    
     /**
      The CouchDB API endpoint to call, for example `/exampleDB/document1/` or `/_all_dbs`
      */
@@ -103,4 +106,40 @@ public protocol CouchOperation {
      `HTTPRequestOperation` properties are computed.
      */
     func serialise() throws
+}
+
+// Default implementation
+public extension CouchOperation {
+    /// Calls the completion handler for the operation with the specified error.
+    ///
+    /// - Note: Subclasses need to override this to call the
+    /// completion handler they have defined.
+    ///
+    func callCompletionHandler(error: Swift.Error) {
+        self.callCompletionHandler(response: nil, httpInfo: nil, error: error)
+    }
+    
+    // TODO: this is bad-- we shouldn't have defualt implementations that do nothing. we need to mitigate these and eventually remove them.
+    /// default implementation of serialise, does nothing.
+    func serialise() throws { return }
+    
+    /// default implementation, does nothing.
+    func processResponse(json: Any) { return }
+    
+    // TODO: deal with this another way vs magic variable
+    var contentType: String { return "application/json" }
+    
+    var data: Data? { return nil }
+    
+    var parameters: [String: String] { return [:] }
+    
+    var method: String { return "GET" }
+    
+    func validateSerializable() -> Bool {
+        return JSONSerialization.isValidJSONObject(self)
+    }
+    
+    func validate() -> Bool {
+        return JSONSerialization.isValidJSONObject(self)
+    }
 }

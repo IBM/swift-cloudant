@@ -35,6 +35,8 @@ import Foundation
  */
 public class GetAllDatabasesOperation : CouchOperation, JSONOperation {
     public typealias Json = [Any]
+    
+    public var operationDelegate: CouchOperationDelegate?
 
     
     /**

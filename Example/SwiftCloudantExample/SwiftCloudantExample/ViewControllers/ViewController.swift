@@ -8,6 +8,15 @@
 import UIKit
 import SwiftCloudant
 
+
+
+/// A UUID for use in all operations during the current session
+///
+/// - Note: this will set to a new random id every time the
+/// application is launched.
+///
+var sessionUserID: String = UUID().uuidString
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var messageLabel: UILabel!
@@ -17,8 +26,21 @@ class ViewController: UIViewController {
     @IBAction func createDBButtonAction(_ sender: Any) {
         createDB()
     }
+    @IBAction func createButtonAction(_ sender: Any) {
+        //createNote()
+        
+        createNoteAsync()
+    }
     
     var couchClient: CouchDBClient?
+    let targetDB = "notes"
+    
+    struct DocumentWithAttachedImage {
+        var image: UIImage
+        var document: SCStorableObject
+    }
+    
+    let documentsWithAttachments: [DocumentWithAttachedImage] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +68,7 @@ class ViewController: UIViewController {
         // init client
         couchClient = .init(url: couchURL,
                             username: "admin",
-                            password: "p@ssw0rd",
+                            password: "",
                             configuration: config)
     }
     
@@ -115,11 +137,10 @@ class ViewController: UIViewController {
         
         // use DB name string in new db creation operation
         let createDB = CreateDatabaseOperation(name: newDBName) { (response, info, error) in
-            
             // handle error
            if let error = error {
                let msg = error.localizedDescription
-               self.updateMessagelabel("error message: \(msg)")
+               self.updateMessagelabel("error message: \(msg), info: \(info)")
            }
             // handle unwrapped response
             if let response = response {
@@ -139,5 +160,79 @@ class ViewController: UIViewController {
         // add to queue for execution
         couchClient?.add(operation: createDB)
     }
+    
+    func createNote() {
+        // pt 1: creation with metadata
+        let createdDate = Date().timeIntervalSinceReferenceDate
+        
+        let newNote: SCNote = .init(title: "asdfasdtest new notes title",
+                                    body: "nest note body",
+                                    created: Int(createdDate),
+                                    createdBy: sessionUserID)
+        
+        // pt 2: put the document into the database
+        // using the new convenience init
+        let createNoteOperation: PutDocumentOperation = .init(storableObject: newNote, databaseName: targetDB)
+        
+        
+        // take delegation of operation lifecycle
+        createNoteOperation.operationDelegate = self
+        
+        // queue operation for execution via client
+        couchClient?.add(operation: createNoteOperation)
+    }
+    
+    func createNoteAsync() {
+        // pt 1: creation with metadata
+        let createdDate = Date().timeIntervalSinceReferenceDate
+        
+        let newNote: SCNote = .init(title: "ASYNC TITLE",
+                                    body: "nest note body",
+                                    created: Int(createdDate),
+                                    createdBy: sessionUserID)
+        
+        // pt 2: put the document into the database
+        // using the new convenience init
+        let createNoteOperation: PutDocumentOperation = .init(storableObject: newNote, databaseName: targetDB)
+        
+        Task {
+            do {
+                let (data, _ ) = try await couchClient!.execAsync(operation: createNoteOperation)
+                
+                if let successRes: PutDocumentSuccess = .fromData(data) {
+                    print("success result prettified:\n\(successRes.prettified)")
+                    print("new document id: \(successRes.id)")
+                }
+            } catch {
+                print("error: \(error)")
+            }
+        }
+    }
+    
+    func createAttachment(docID: String, docRev: String) {
+        // get attachment document
+    }
 }
 
+extension ViewController: CouchOperationDelegate {
+    
+    // handles response with http info
+    func operationDidRespond(with info: SwiftCloudant.HTTPInfo) {
+        print("operation responded with info: \(info)")
+    }
+    
+    // handles response with success result
+    func operationDidSucceed(with result: Data) {
+        print("operation succeeded with result: \(result)")
+        // attempt to decode from data
+        if let successRes: PutDocumentSuccess = .fromData(result) {
+            print("success result prettified:\n\(successRes.prettified)")
+        }        
+    }
+    
+    // handles operation error
+    func operationDidFail(with error: Error) {
+        print("operation failed with error: \(error)")
+        
+    }
+}

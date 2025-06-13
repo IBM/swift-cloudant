@@ -50,6 +50,8 @@ import Foundation
  */
 public class QueryViewOperation: ViewOperation, JSONOperation {
     
+    public var operationDelegate: CouchOperationDelegate?
+
     /**
      Creates the operation
      

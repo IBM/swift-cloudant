@@ -22,9 +22,9 @@ import Foundation
  */
 internal struct InterceptableSessionConfiguration {
     
-    /**
-     The maximum number of retries the session should make before returning the result of an HTTP request
-     */
+    ///
+    /// The maximum number of retries the session should make before returning the result of an HTTP request
+    ///
     internal var maxRetries: UInt
     /**
      The number of times to back off from making requests when a 429 response is encountered

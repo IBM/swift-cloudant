@@ -37,6 +37,8 @@ import Foundation
  
 public class ReadAttachmentOperation: CouchDatabaseOperation, DataOperation {
     
+    public var operationDelegate: CouchOperationDelegate?
+
     /**
      Creates the operation.
      

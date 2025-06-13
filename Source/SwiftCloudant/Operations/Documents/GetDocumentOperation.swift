@@ -35,6 +35,8 @@ import Foundation
  */
 public class GetDocumentOperation: CouchDatabaseOperation, JSONOperation {
     public typealias Json = [String: Any]
+    
+    public var operationDelegate: CouchOperationDelegate?
 
 
     /**
